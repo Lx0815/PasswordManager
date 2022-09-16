@@ -1,0 +1,11 @@
+package com.d.passwordmanager.pojo;
+/**
+ * @author: Ding
+ * @date: 2022/8/20 15:20
+ * @description:
+ * @modify:
+ */
+
+
+public class User {
+}

@@ -1,14 +1,110 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="$CONTROLLER_NAME$"
-            prefHeight="400.0" prefWidth="600.0" >
+<!--
+    开发计划：
+        1. Index 页面大小固定，不能调节
+        2. 密码导入功能
+            1. Excel.csv 导入
+            2. JSON 导入
+        3. 密码导出功能
+            1. 导出为 Excel.csv
+            2. 导出为 JSON
+        4. 弱密码添加强调背景色
+        5. 注销账号后密码发送至邮箱
+        6. 修改软件登录密码
+        7.
+-->
 
-</AnchorPane>
+<?import javafx.scene.control.PasswordField?>
+<BorderPane fx:id="indexPanel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="512.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.d.passwordmanager.controller.IndexController">
+    <bottom>
+        <Pane prefHeight="34.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+            <children>
+                <Label fx:id="totalPasswordTipsLabel" layoutX="30.0" layoutY="7.0" text="共 x 条密码记录" />
+            </children>
+        </Pane>
+    </bottom>
+    <right>
+        <Pane prefHeight="405.0" prefWidth="123.0" BorderPane.alignment="CENTER">
+            <children>
+                <Button fx:id="addOneButton" layoutX="29.0" layoutY="20.0" mnemonicParsing="false" onMouseClicked="#addOnePasswordRecord" prefHeight="25.0" prefWidth="80.0" text="新增">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Button>
+                <Button fx:id="removeButton" layoutX="29.0" layoutY="84.0" mnemonicParsing="false" onMouseClicked="#deleteSelected" prefHeight="25.0" prefWidth="80.0" text="删除">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Button>
+                <Button fx:id="createPasswordButton" layoutX="29.0" layoutY="150.0" mnemonicParsing="false" onMouseClicked="#createPassword" prefHeight="25.0" prefWidth="80.0" text="生成密码">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Button>
+            </children>
+        </Pane>
+    </right>
+    <top>
+        <Pane prefHeight="44.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+            <children>
+                <TextField fx:id="searchTextField" layoutX="453.0" layoutY="10.0" prefHeight="40.0" prefWidth="470.0" promptText="域名/描述/账号" />
+                <Button fx:id="searchButton" layoutX="930.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#doSearch" prefHeight="40.0" prefWidth="80.0" text="🔍搜索">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                </Button>
+            <Label layoutX="28.0" layoutY="1.0" onMouseClicked="#removeSearchTextField" text="密码管理器 V1.0">
+               <font>
+                  <Font size="32.0" />
+               </font>
+            </Label>
+            </children>
+        </Pane>
+    </top>
+    <center>
+        <Pane prefHeight="322.0" prefWidth="468.0" BorderPane.alignment="CENTER">
+            <children>
+                <TableView fx:id="contentTableView" layoutX="21.0" layoutY="58.0" prefHeight="376.0" prefWidth="880.0">
+                    <columns>
+                        <TableColumn fx:id="checkboxColumn" prefWidth="146" text="全选" />
+                        <TableColumn fx:id="domainNameColumn" onEditCommit="#commitNewDomainName" prefWidth="146" text="域名" />
+                        <TableColumn fx:id="descriptionColumn" onEditCommit="#commitNewDescription" prefWidth="146" text="描述" />
+                        <TableColumn fx:id="accountColumn" onEditCommit="#commitNewAccount" prefWidth="146" text="账号" />
+                        <TableColumn fx:id="passwordColumn" onEditCommit="#commitNewPassword" prefWidth="146" text="密码" />
+                        <TableColumn fx:id="passwordStrengthColumn" prefWidth="146" text="密码强度" />
+                    </columns>
+                </TableView>
+                <Pane layoutX="21.0" layoutY="4.0" prefHeight="50.0" prefWidth="880.0">
+                    <children>
+                        <TextField fx:id="domainNameTextField" layoutX="56.0" layoutY="16.0" />
+                        <Label layoutX="14.0" layoutY="18.0" text="域名：">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Label>
+                        <Label layoutX="230.0" layoutY="18.0" text="描述：">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Label>
+                        <TextField fx:id="descriptionTextField" layoutX="272.0" layoutY="16.0" />
+                        <Label layoutX="451.0" layoutY="20.0" text="账号：" />
+                        <TextField fx:id="accountTextField" layoutX="487.0" layoutY="16.0" />
+                        <Label layoutX="663.0" layoutY="20.0" text="密码：" />
+                        <PasswordField fx:id="passwordTextField" layoutX="699.0" layoutY="16.0" />
+                    </children>
+                </Pane>
+            </children>
+        </Pane>
+    </center>
+</BorderPane>

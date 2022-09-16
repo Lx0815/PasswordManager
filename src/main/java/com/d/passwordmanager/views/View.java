@@ -1,4 +1,9 @@
 package com.d.passwordmanager.views;
+
+
+import com.d.passwordmanager.command.utils.ApplicationUtils;
+import javafx.stage.Stage;
+
 /**
  * @author: Ding
  * @date: 2022/7/18 14:36
@@ -8,4 +13,6 @@ package com.d.passwordmanager.views;
 
 
 public interface View {
+
+    void close();
 }

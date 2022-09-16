@@ -1,77 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:aop="http://www.springframework.org/schema/aop"
-       xmlns:util="http://www.springframework.org/schema/util"
-       xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
-       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
-       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd
-       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-
-    <!-- 引入配置文件 -->
-    <context:property-placeholder location="JDBC.properties" file-encoding="UTF-8"/>
-
-    <!-- 定义数据源 -->
-    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-        <property name="configLocation" value="mybatis-config.xml"/>
-        <property name="dataSource" ref="dataSource"/>
-        <property name="typeAliasesPackage" value="com.d.passwordmanager.pojo"/>
-<!--        <property name="mapperLocations" value="com/d/passwordmanager/mapper/*.xml"/>-->
-    </bean>
-
-    <!-- 数据源配置, 使用 Druid 数据库连接池 -->
-    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
-        <property name="dbType" value="sqlite"/>
-
-        <property name="url" value="${sqlite.url}"/>
-        <!-- 数据源驱动类可不写，Druid默认会自动根据URL识别DriverClass -->
-        <property name="driverClassName" value="${sqlite.driverClassName}"/>
-        <property name="username" value="${sqlite.username}"/>
-        <property name="password" value="${sqlite.password}"/>
-
-        <!-- 配置数据库连接的初始化大小、最小、最大 -->
-<!--        <property name="initialSize" value="${jdbc.pool.initialSize}" />-->
-<!--        <property name="minIdle" value="${jdbc.pool.minIdle}" />-->
-<!--        <property name="maxActive" value="${jdbc.pool.maxActive}" />-->
-
-        <!-- 配置获取连接等待超时的时间 -->
-<!--        <property name="maxWait" value="60000" />-->
-
-        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
-<!--        <property name="timeBetweenEvictionRunsMillis" value="60000" />-->
-
-        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
-<!--        <property name="minEvictableIdleTimeMillis" value="300000" />-->
-        <!-- 解决 Druid 连接池无效连接，连接mysql数据库的错误，增加对链接有效性检测  -->
-        <property name="validationQuery" value="${jdbc.testSql}" />
-
-        <property name="testWhileIdle" value="true"/>
-        <!-- 考虑系统稳定性最好也启用配置：test-on-borrow: true，取链接时，先检测一下，然后在使用。 -->
-<!--        <property name="testOnBorrow" value="true" />-->
-<!--        <property name="testOnReturn" value="false" />-->
-
-        <!-- 打开PSCache，并且指定每个连接上PSCache的大小（Oracle使用）-->
-<!--        <property name="poolPreparedStatements" value="false" />-->
-<!--        <property name="maxPoolPreparedStatementPerConnectionSize" value="-1" />-->
-
-        <!-- 配置监控统计拦截的filters -->
-<!--        <property name="filters" value="stat"/>-->
-    </bean>
-
-    <bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.d.passwordmanager.mapper"/>
-<!--        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>-->
-    </bean>
-
-    <bean id="userService" class="com.d.passwordmanager.service.impl.UserServiceImpl">
-        <property name="userMapper" ref="userMapper"/>
-    </bean>
-    <bean id="loginController" class="com.d.passwordmanager.controller.LoginController">
-        <property name="userService" ref="userService"/>
-    </bean>
-
+    <import resource="application-context-views.xml"/>
+    <import resource="application-context-mybatis.xml"/>
+    <import resource="application-context-service.xml"/>
+    <import resource="application-context-controller.xml"/>
 </beans>

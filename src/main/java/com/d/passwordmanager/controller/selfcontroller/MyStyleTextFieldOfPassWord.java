@@ -35,7 +35,6 @@ public class MyStyleTextFieldOfPassWord {
 
         textField.focusedProperty().addListener(new TextFieldFocusListener(textField,this));
         textField.textProperty().addListener(new TextFieldTextListener(textField,this));
-        //textField.hoverProperty().addListener(new TextFieldHoverListener(textField,this));
 
         return textField;
     }

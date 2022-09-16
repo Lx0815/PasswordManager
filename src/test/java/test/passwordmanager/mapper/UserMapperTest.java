@@ -1,11 +1,8 @@
-package passwordmanager.mapper;
+package test.passwordmanager.mapper;
 
 import com.d.passwordmanager.mapper.UserMapper;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 /**
@@ -17,9 +14,7 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 
 // 上面两个注解可以替换成一个
-//@SpringJUnitConfig(locations = {"classpath:application-context.xml"})
-    @ExtendWith(SpringExtension.class)
-    @ContextConfiguration(locations = "classpath:application-context.xml")
+@SpringJUnitConfig(locations = {"classpath:application-context.xml"})
 public class UserMapperTest {
 
     @Autowired

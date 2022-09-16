@@ -1,7 +1,10 @@
-package com.d.passwordmanager.utils;
+package com.d.passwordmanager.command.utils;
 
+import com.d.passwordmanager.views.BaseView;
 import com.d.passwordmanager.views.MainApplication;
+import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.stage.Stage;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -29,5 +32,17 @@ public class ApplicationUtils {
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource(resource));
         fxmlLoader.setControllerFactory(context::getBean);
         return fxmlLoader;
+    }
+
+    public static void startAndShow(BaseView view) {
+        try {
+            view.start(new Stage());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void close(Stage stage) {
+        stage.close();
     }
 }

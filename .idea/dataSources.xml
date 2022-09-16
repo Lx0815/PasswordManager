@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="PasswordManager.db" uuid="3574462d-42f2-4814-a5f5-99fe6260672c">
+    <data-source source="LOCAL" name="PasswordManager" uuid="1d79fb62-7cec-40d7-9d13-61dd735d1354">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:src/main/java/com/d/passwordmanager/mapper/PasswordManager.db</jdbc-url>
+      <jdbc-url>jdbc:sqlite:D:\Project\SpringProject\PasswordManager\src\main\java\com\d\passwordmanager\mapper\PasswordManager.db</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
+      <libraries>
+        <library>
+          <url>file://$APPLICATION_CONFIG_DIR$/jdbc-drivers/Xerial SQLiteJDBC/3.38.0/sqlite-jdbc-3.38.0.jar</url>
+        </library>
+      </libraries>
     </data-source>
   </component>
 </project>

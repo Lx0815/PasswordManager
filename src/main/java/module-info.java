@@ -1,9 +1,11 @@
 module com.d.passwordmanager {
+    requires java.base;
+    requires java.compiler;
+    requires java.sql;
     requires druid;
     requires com.dlsc.formsfx;
     requires java.annotation;
     requires validatorfx;
-//    requires org.apiguardian.api;
     requires org.controlsfx.controls;
     requires org.kordamp.ikonli.javafx;
     requires org.mybatis;
@@ -12,8 +14,12 @@ module com.d.passwordmanager {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.graphics;
-//    requires org.opentest4j;
-//    requires org.junit.jupiter.api;
+    requires slf4j.api;
+    requires logback.core;
+    requires logback.classic;
+    requires org.aspectj.weaver;
+    requires org.apache.commons.lang3;
+
     requires spring.aop;
     requires spring.beans;
     requires spring.context;
@@ -21,17 +27,26 @@ module com.d.passwordmanager {
     requires spring.expression;
     requires spring.jcl;
     requires spring.jdbc;
-    requires spring.test;
+
     requires spring.tx;
     requires org.xerial.sqlitejdbc;
-//
-//    exports com.d.passwordmanager.command.constant;
-//    exports com.d.passwordmanager.pojo;
-//    exports com.d.passwordmanager.controller;
-//    exports com.d.passwordmanager.service;
-//    exports com.d.passwordmanager.mapper;
-    exports com.d.passwordmanager;
 
-    opens com.d.passwordmanager.controller to javafx.fxml;
-    opens com.d.passwordmanager to javafx.fxml;
+
+    exports com.d.passwordmanager.command.constant;
+    exports com.d.passwordmanager.command.utils;
+    exports com.d.passwordmanager.pojo;
+    exports com.d.passwordmanager.controller;
+    exports com.d.passwordmanager.controller.selfcontroller;
+    exports com.d.passwordmanager.service;
+    exports com.d.passwordmanager.service.impl;
+    exports com.d.passwordmanager.mapper;
+    exports com.d.passwordmanager.views;
+
+
+    opens com.d.passwordmanager.controller to javafx.fxml, spring.core;
+    opens com.d.passwordmanager.views to javafx.fxml;
+    opens com.d.passwordmanager.service to javafx.fxml, spring.core;
+    opens com.d.passwordmanager.service.impl to spring.core;
+
+    opens com.d.passwordmanager.mapper to spring.core, spring.context, spring.test, spring.jdbc, spring.beans;
 }

@@ -1,14 +1,36 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<!--<?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="$CONTROLLER_NAME$"
-            prefHeight="400.0" prefWidth="600.0" >
-
-</AnchorPane>
+<BorderPane fx:id="messageBoxPanel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.d.passwordmanager.controller.MessageBoxController">
+    <bottom>
+        <Pane prefHeight="42.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+            <children>
+                <Button fx:id="cancelButton" layoutX="231.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#doCancel" text="Cancel" />
+            </children>
+        </Pane>
+    </bottom>
+    <center>
+        <Pane prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <children>
+                <TextArea fx:id="messageTextArea" disable="true" layoutX="50.0" layoutY="17.0" prefHeight="100.0" prefWidth="200.0" wrapText="true">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                </TextArea>
+            </children>
+        </Pane>
+    </center>
+    <top>
+        <Pane prefHeight="24.0" prefWidth="300.0" BorderPane.alignment="CENTER">
+            <children>
+                <Label fx:id="messageTypeLabel" layoutX="7.0" layoutY="5.0" />
+            </children>
+        </Pane>
+    </top>
+</BorderPane>-->

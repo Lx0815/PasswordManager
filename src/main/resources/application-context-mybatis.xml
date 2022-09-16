@@ -1,14 +1,90 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:aop="http://www.springframework.org/schema/aop"
-       xmlns:util="http://www.springframework.org/schema/util"
-       xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
-       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
-       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd
-       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
+
+    <!--
+        引入配置文件
+    -->
+    <context:property-placeholder location="JDBC.properties" file-encoding="UTF-8"/>
+
+    <!--
+        数据源配置, 使用 Druid 数据库连接池
+    -->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="dbType" value="sqlite"/>
+
+        <property name="url" value="${sqlite.url}"/>
+        <!-- 数据源驱动类可不写，Druid默认会自动根据URL识别DriverClass -->
+        <property name="driverClassName" value="${sqlite.driverClassName}"/>
+        <property name="username" value="${sqlite.username}"/>
+        <property name="password" value="${sqlite.password}"/>
+        <property name="validationQuery" value="${jdbc.testSql}"/>
+        <property name="testWhileIdle" value="true"/>
+    </bean>
+
+    <!--
+        定义数据源
+    -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+<!--        <property name="configLocation" value="mybatis-config.xml"/>-->
+        <property name="dataSource" ref="dataSource"/>
+        <property name="typeAliasesPackage" value="com.d.passwordmanager.pojo"/>
+        <property name="mapperLocations" value="classpath:com/d/passwordmanager/mapper/*.xml"/>
+    </bean>
+
+    <!--
+        创建 UserMapper 接口的代理对象,创建单个代理对象
+    -->
+<!--    <bean id="userMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">-->
+<!--&lt;!&ndash;        注入IAccountDao接口&ndash;&gt;-->
+<!--        <property name="mapperInterface" value="com.d.passwordmanager.mapper.UserMapper"/>-->
+<!--&lt;!&ndash;        注入sqlSessionFactory工厂对象&ndash;&gt;-->
+<!--        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>-->
+<!--    </bean>-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.d.passwordmanager.mapper"/>
+        <!--        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>-->
+    </bean>
+
+
+    <!--
+        事务管理
+    -->
+    <!-- 配置事务管理器 -->
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    <!--配置通知-->
+    <tx:advice id="select-advice">
+        <!--配置事务参数-->
+        <tx:attributes>
+            <tx:method name="select*" propagation="REQUIRED" isolation="DEFAULT" read-only="false" timeout="10"/>
+        </tx:attributes>
+    </tx:advice>
+    <!--配置切点和切面-->
+    <aop:config>
+        <!--配置切点-->
+        <aop:pointcut id="service-select" expression="execution(* com.d.passwordmanager.service.*.select*(..))"/>
+        <!--配置切面-->
+        <aop:advisor advice-ref="select-advice" pointcut-ref="service-select"/>
+    </aop:config>
+
+    <tx:advice id="update-advice">
+        <tx:attributes>
+            <tx:method name="update*"/>
+        </tx:attributes>
+    </tx:advice>
+    <aop:config>
+        <aop:pointcut id="service-update" expression="execution(* com.d.passwordmanager.service.*.update*(..))"/>
+        <aop:advisor advice-ref="update-advice" pointcut-ref="service-update"/>
+    </aop:config>
 </beans>

@@ -30,40 +30,8 @@ public class PasswordServiceImpl implements PasswordService {
     }
 
     @Override
-    public boolean updateDescription(PasswordRecord passwordRecord) {
-        passwordRecord.setPassword(null);
-        passwordRecord.setPasswordStrength(null);
-        passwordRecord.setDomainName(null);
-        passwordRecord.setAccount(null);
-        return ObjectUtils.nullSafeEquals(passwordMapper.updateById(passwordRecord), 1);
-    }
-
-    @Override
-    public boolean updateDomainName(PasswordRecord passwordRecord) {
-        passwordRecord.setPassword(null);
-        passwordRecord.setPasswordStrength(null);
-        passwordRecord.setDescription(null);
-        passwordRecord.setAccount(null);
-        return ObjectUtils.nullSafeEquals(passwordMapper.updateById(passwordRecord), 1);
-    }
-
-    @Override
-    public boolean updatePassword(PasswordRecord passwordRecord) {
-        passwordRecord.setDomainName(null);
-        passwordRecord.setPasswordStrength(null);
-        passwordRecord.setDescription(null);
-        passwordRecord.setAccount(null);
-        return ObjectUtils.nullSafeEquals(passwordMapper.updateById(passwordRecord), 1);
-    }
-
-
-    @Override
-    public boolean updateAccount(PasswordRecord passwordRecord) {
-        passwordRecord.setDomainName(null);
-        passwordRecord.setPasswordStrength(null);
-        passwordRecord.setDescription(null);
-        passwordRecord.setPassword(null);
-        return ObjectUtils.nullSafeEquals(passwordMapper.updateById(passwordRecord), 1);
+    public boolean updateByPasswordRecord(PasswordRecord passwordRecord) {
+        return passwordMapper.updateById(passwordRecord) == 1;
     }
 
     @Override

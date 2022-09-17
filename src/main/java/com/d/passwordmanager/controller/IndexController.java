@@ -6,11 +6,10 @@ import java.util.*;
 
 import com.d.passwordmanager.command.constant.PasswordStrength;
 import com.d.passwordmanager.command.utils.AlertUtils;
-import com.d.passwordmanager.controller.selfcontroller.MyStyleTextFieldOfPassWord;
 import com.d.passwordmanager.pojo.PasswordRecord;
 import com.d.passwordmanager.service.PasswordService;
 import com.d.passwordmanager.views.CreatePasswordView;
-import com.d.passwordmanager.views.IndexView;
+import com.d.passwordmanager.views.EditPasswordView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -20,8 +19,9 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.util.ObjectUtils;
+
+import static com.d.passwordmanager.command.utils.PasswordUtils.*;
 
 /**
  * @author: Ding
@@ -58,7 +58,7 @@ public class IndexController {
     private TableColumn<PasswordRecord, String> accountColumn; // Value injected by FXMLLoader
 
     @FXML // fx:id="passwordColumn"
-    private TableColumn<PasswordRecord, TextField> passwordColumn; // Value injected by FXMLLoader
+    private TableColumn<PasswordRecord, String> passwordColumn; // Value injected by FXMLLoader
 
     @FXML // fx:id="copyColumn"
     private TableColumn<PasswordRecord, PasswordStrength> passwordStrengthColumn; // Value injected by FXMLLoader
@@ -97,10 +97,20 @@ public class IndexController {
     /* Spring */
 
     private PasswordService passwordService;
+    public void setPasswordService(PasswordService passwordService) {
+        this.passwordService = passwordService;
+    }
+
 
     private CreatePasswordView createPasswordView;
+    public void setCreatePasswordView(CreatePasswordView createPasswordView) {
+        this.createPasswordView = createPasswordView;
+    }
 
-    private IndexView indexView;
+    private EditPasswordView editPasswordView;
+    public void setEditPasswordView(EditPasswordView editPasswordView) {
+        this.editPasswordView = editPasswordView;
+    }
 
     /* Others */
     private int passwordRecordSize;
@@ -153,7 +163,7 @@ public class IndexController {
         domainNameColumn.setCellValueFactory(new PropertyValueFactory<>("domainName"));
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
         accountColumn.setCellValueFactory(new PropertyValueFactory<>("account"));
-        passwordColumn.setCellValueFactory(new PropertyValueFactory<>("passwordField"));
+        passwordColumn.setCellValueFactory(new PropertyValueFactory<>("passwordEcho"));
 
         passwordStrengthColumn.setCellValueFactory(new PropertyValueFactory<>("passwordStrength"));
 
@@ -175,7 +185,7 @@ public class IndexController {
         passwordStrengthColumn.setComparator(Comparator.naturalOrder());
 
         // 使单元格可编辑
-        setColumnEditable(true, new TableColumn[]{domainNameColumn, descriptionColumn, accountColumn});
+//        setColumnEditable(true, new TableColumn[]{domainNameColumn, descriptionColumn, accountColumn});
 
         contentTableView.setItems(FXCollections.observableList(passwordRecordList));
     }
@@ -193,66 +203,11 @@ public class IndexController {
 
 
     @FXML
-    void commitNewDescription(TableColumn.CellEditEvent<PasswordRecord, String> event) {
-        PasswordRecord rowValue = event.getRowValue();
-        rowValue.setDescription(event.getNewValue());
-        boolean isSuccess = passwordService.updateDescription(rowValue);
-        if (isSuccess) {
-            AlertUtils.alert(Alert.AlertType.INFORMATION, "描述修改成功");
-        } else {
-            AlertUtils.alert(Alert.AlertType.WARNING, "描述修改失败，请联系管理员处理");
-        }
-    }
-
-    @FXML
-    void commitNewDomainName(TableColumn.CellEditEvent<PasswordRecord, String> event) {
-        PasswordRecord rowValue = event.getRowValue();
-        rowValue.setDomainName(event.getNewValue());
-        boolean isSuccess = passwordService.updateDomainName(rowValue);
-        if (isSuccess) {
-            AlertUtils.alert(Alert.AlertType.INFORMATION, "域名修改成功");
-        } else {
-            AlertUtils.alert(Alert.AlertType.WARNING, "域名修改失败，请联系管理员处理");
-        }
-    }
-
-    @FXML
-    void commitNewPassword(TableColumn.CellEditEvent<PasswordRecord, TextField> event) {
-        PasswordRecord rowValue = event.getRowValue();
-        String password = event.getNewValue().getText();
-        boolean flag = checkPassword(password);
-        if (flag) {
-            rowValue.setPassword(password);
-            boolean isSuccess = passwordService.updatePassword(rowValue);
-            if (isSuccess) {
-                AlertUtils.alert(Alert.AlertType.INFORMATION, "密码修改成功");
-            } else {
-                AlertUtils.alert(Alert.AlertType.WARNING, "密码修改失败，请联系管理员处理");
-            }
-        } else {
-            AlertUtils.alert(Alert.AlertType.WARNING, "密码格式错误，请使用大小写英文字母、数字以及下列符号`~!@#$%^&*()_+-=[]{}\\\\|;:'\\\",<.>/?\"");
-        }
-    }
-
-    private boolean checkPassword(String password) {
-        int len = password.length();
-        for (int i = 0; i < len; i++) {
-            if (! PasswordStrength.ALLOW_STRINGS.contains(String.valueOf(password.charAt(i)))) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    @FXML
-    void commitNewAccount(TableColumn.CellEditEvent<PasswordRecord, String> event) {
-        PasswordRecord rowValue = event.getRowValue();
-        rowValue.setAccount(event.getNewValue());
-        boolean isSuccess = passwordService.updateAccount(rowValue);
-        if (isSuccess) {
-            AlertUtils.alert(Alert.AlertType.INFORMATION, "账号修改成功");
-        } else {
-            AlertUtils.alert(Alert.AlertType.WARNING, "账号修改失败，请联系管理员处理");
+    private void toEditView(TableColumn.CellEditEvent<PasswordRecord, String> event) {
+        try {
+            editPasswordView.start(new Stage(), event.getRowValue());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -283,7 +238,9 @@ public class IndexController {
 
     @FXML
     void addOnePasswordRecord(MouseEvent event) {
-        PasswordRecord passwordRecord = getNewPasswordRecord();
+        PasswordRecord passwordRecord = getPasswordRecordByTextFields(
+                domainNameTextField, descriptionTextField, accountTextField, passwordTextField
+        );
         if (ObjectUtils.isEmpty(passwordRecord)) return;
         boolean isSuccess = passwordService.insertOne(passwordRecord);
         refresh(isSuccess);
@@ -337,26 +294,7 @@ public class IndexController {
         passwordTextField.setText(null);
     }
 
-    private PasswordRecord getNewPasswordRecord() {
-        String domainName = domainNameTextField.getText();
-        String description = descriptionTextField.getText();
-        String account = accountTextField.getText();
-        String password = passwordTextField.getText();
 
-        if (ObjectUtils.isEmpty(domainName) || ObjectUtils.isEmpty(description)
-                || ObjectUtils.isEmpty(account) || ObjectUtils.isEmpty(password)) {
-
-            AlertUtils.alert(Alert.AlertType.WARNING, "请完善相关信息");
-            return null;
-        }
-        if (!checkPassword(password)) {
-            AlertUtils.alert(Alert.AlertType.WARNING, "密码格式错误，请使用大小写英文字母、数字以及下列符号`~!@#$%^&*()_+-=[]{}\\\\|;:'\\\",<.>/?\"");
-        }
-
-        PasswordStrength passwordStrength = PasswordStrength.calculatePasswordStrength(password);
-
-        return new PasswordRecord(domainName, description, account, password, passwordStrength);
-    }
 
     public void refresh() {
         refresh(true);
@@ -365,19 +303,7 @@ public class IndexController {
     public void refresh(boolean flag) {
         if (flag) {
             initIndex();
-            contentTableView.refresh();
+//            contentTableView.refresh();
         }
-    }
-
-    public void setPasswordService(PasswordService passwordService) {
-        this.passwordService = passwordService;
-    }
-
-    public void setCreatePasswordView(CreatePasswordView createPasswordView) {
-        this.createPasswordView = createPasswordView;
-    }
-
-    public void setIndexView(IndexView indexView) {
-        this.indexView = indexView;
     }
 }

@@ -15,15 +15,9 @@ import java.util.List;
 public interface PasswordService {
     List<PasswordRecord> selectAll();
 
-    boolean updateDescription(PasswordRecord rowValue);
-
-    boolean updateDomainName(PasswordRecord rowValue);
-
-    boolean updatePassword(PasswordRecord rowValue);
-
     boolean insertOne(PasswordRecord passwordRecord);
 
-    boolean updateAccount(PasswordRecord rowValue);
+    boolean updateByPasswordRecord(PasswordRecord rowValue);
 
     boolean deleteByList(List<PasswordRecord> deleteList);
 

@@ -28,6 +28,7 @@ public class TextFieldTextListener implements ChangeListener<String> {
     @Override
     public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
         if (!textField.getText().equals(myStyleTextFieldOfPassWord.getEcho())){
+            myStyleTextFieldOfPassWord.getPasswordField();
             myStyleTextFieldOfPassWord.setPassword(newValue);
         }
     }

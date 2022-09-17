@@ -9,25 +9,31 @@
 
     <aop:aspectj-autoproxy proxy-target-class="true"/>
 
-    <bean id="loginController" class="com.d.passwordmanager.controller.LoginController" init-method="initialize">
+    <bean id="loginController" class="com.d.passwordmanager.controller.LoginController">
         <property name="userService" ref="userService"/>
         <property name="loginView" ref="loginView"/>
         <property name="indexView" ref="indexView"/>
     </bean>
 
-    <bean id="registerController" class="com.d.passwordmanager.controller.RegisterController" init-method="initialize">
+    <bean id="registerController" class="com.d.passwordmanager.controller.RegisterController">
         <property name="userService" ref="userService"/>
         <property name="loginView" ref="loginView"/>
         <property name="registerView" ref="registerView"/>
     </bean>
 
-    <bean id="indexController" class="com.d.passwordmanager.controller.IndexController" init-method="initialize">
+    <bean id="indexController" class="com.d.passwordmanager.controller.IndexController">
         <property name="passwordService" ref="passwordService"/>
         <property name="createPasswordView" ref="createPasswordView"/>
-        <property name="indexView" ref="indexView"/>
+        <property name="editPasswordView" ref="editPasswordView"/>
     </bean>
 
     <bean id="createPasswordController" class="com.d.passwordmanager.controller.CreatePasswordController">
 
+    </bean>
+
+    <bean id="editPasswordController" class="com.d.passwordmanager.controller.EditPasswordController">
+        <property name="passwordService" ref="passwordService"/>
+        <property name="editPasswordView" ref="editPasswordView"/>
+        <property name="indexController" ref="indexController"/>
     </bean>
 </beans>

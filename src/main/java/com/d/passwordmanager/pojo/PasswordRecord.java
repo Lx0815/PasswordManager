@@ -31,7 +31,8 @@ public class PasswordRecord {
     // 仅用于记录当前密码记录是否被选中
     private CheckBox selected = new CheckBox();
 
-    private TextField passwordField;
+
+    private String passwordEcho;
 
     private PasswordStrength passwordStrength;
 
@@ -106,22 +107,15 @@ public class PasswordRecord {
         this.selected = selected;
     }
 
-    public TextField getPasswordField() {
-        if (ObjectUtils.isEmpty(passwordField)) {
-            MyStyleTextFieldOfPassWord myStyleTextFieldOfPassWord = new MyStyleTextFieldOfPassWord();
-            myStyleTextFieldOfPassWord.setPassword(password);
-
-            String echo = getEcho(password);
-            myStyleTextFieldOfPassWord.setEcho(echo);
-
-            passwordField = myStyleTextFieldOfPassWord.getPasswordField();
-            passwordField.setText(echo);
+    public String getPasswordEcho() {
+        if (ObjectUtils.isEmpty(passwordEcho)) {
+            passwordEcho = "*".repeat(password.length());
         }
-        return passwordField;
+        return passwordEcho;
     }
 
-    public void setPasswordField(TextField passwordField) {
-        this.passwordField = passwordField;
+    public void setPasswordEcho(String passwordEcho) {
+        this.passwordEcho = passwordEcho;
     }
 
     @Override

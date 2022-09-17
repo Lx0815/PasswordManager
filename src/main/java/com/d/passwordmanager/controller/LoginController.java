@@ -2,10 +2,11 @@ package com.d.passwordmanager.controller;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 import com.d.passwordmanager.command.utils.AlertUtils;
+import com.d.passwordmanager.command.utils.ApplicationUtils;
+import com.d.passwordmanager.service.PasswordService;
 import com.d.passwordmanager.service.UserService;
 import com.d.passwordmanager.views.IndexView;
 import com.d.passwordmanager.views.LoginView;
@@ -18,11 +19,13 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-import static com.d.passwordmanager.command.constant.ErrorCode.NO_DATA;
-
 /**
- * Sample Skeleton for 'login.fxml' Controller Class
+ * @author: Ding
+ * @date: 2022/8/25 8:32
+ * @description: loginView 对应的控制器
+ * @modify:
  */
+
 
 public class LoginController {
 
@@ -47,15 +50,30 @@ public class LoginController {
     @FXML // fx:id="titleLabel"
     private Label titleLabel; // Value injected by FXMLLoader
 
-    /*
+    /**
      * 由 spring 注入
      */
+
     private UserService userService;
+    /* IOC setter 注入 */
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
 
     private LoginView loginView;
+    public void setLoginView(LoginView loginView) {
+        this.loginView = loginView;
+    }
 
     private IndexView indexView;
+    public void setIndexView(IndexView indexView) {
+        this.indexView = indexView;
+    }
 
+    private PasswordService passwordService;
+    public void setPasswordService(PasswordService passwordService) {
+        this.passwordService = passwordService;
+    }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
@@ -75,6 +93,12 @@ public class LoginController {
         return loginPanel.getPrefWidth();
     }
 
+    /**
+     * fx:id="loginButton"
+     * 点击登录按钮时调用
+     *
+     * @param mouseEvent 鼠标点击事件
+     */
     @FXML
     public void login(MouseEvent mouseEvent) {
         String passwordStr = passwordField.getText();
@@ -92,11 +116,13 @@ public class LoginController {
     }
 
 
+    /**
+     * 更新密码错误次数
+     * @return 返回新的密码错误次数
+     */
     private Integer updateErrorCount() {
         Integer oldErrorCount = userService.getErrorCount();
-        if (Objects.equals(oldErrorCount, NO_DATA.toInteger())) {
-            // 先注册用户
-        }
+
         if (oldErrorCount == 2) {
             // 发送所有数据到用户邮箱
             // 清空数据
@@ -107,32 +133,20 @@ public class LoginController {
         return newErrorCount;
     }
 
+    /**
+     * 删除所有数据
+     */
     private void deleteAll() {
         // 清空用户表
         userService.deleteUser();
+        passwordService.deleteAll();
     }
 
+    /**
+     * 转到主页面
+     */
     private void toIndexView() {
-        // do something
-        try {
-            indexView.start(new Stage());
-            loginView.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-    /* IOC setter 注入 */
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
-
-    public void setLoginView(LoginView loginView) {
-        this.loginView = loginView;
-    }
-
-    public void setIndexView(IndexView indexView) {
-        this.indexView = indexView;
+        ApplicationUtils.startAndShow(indexView);
+        loginView.close();
     }
 }

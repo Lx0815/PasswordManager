@@ -33,7 +33,7 @@ public class CreatePasswordView extends BaseView {
 
     @Override
     public void close() {
-        ApplicationUtils.close(stage);
+        stage.close();
     }
 
     public void setCreatePasswordController(CreatePasswordController createPasswordController) {

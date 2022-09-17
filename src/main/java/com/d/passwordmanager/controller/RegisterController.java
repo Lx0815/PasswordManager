@@ -15,11 +15,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 
 /**
- * Sample Skeleton for 'register.fxml' Controller Class
+ * @author: Ding
+ * @date: 2022/8/25 8:32
+ * @description: registerView 对应的控制器
+ * @modify:
  */
+
 
 public class RegisterController {
 
@@ -45,10 +48,19 @@ public class RegisterController {
 
     /* Spring */
     private UserService userService;
+    public void setUserService(UserServiceImpl userService) {
+        this.userService = userService;
+    }
 
     private LoginView loginView;
+    public void setLoginView(LoginView loginView) {
+        this.loginView = loginView;
+    }
 
     private RegisterView registerView;
+    public void setRegisterView(RegisterView registerView) {
+        this.registerView = registerView;
+    }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
@@ -58,7 +70,11 @@ public class RegisterController {
         assert registerPanel != null : "fx:id=\"registerPanel\" was not injected: check your FXML file 'register.fxml'.";
     }
 
-
+    /**
+     * 进行注册操作
+     *
+     * @param mouseEvent
+     */
     public void doRegister(MouseEvent mouseEvent) {
         String passwordStr = passwordTextField.getText();
         String emailStr = emailTextField.getText();
@@ -76,20 +92,11 @@ public class RegisterController {
         }
     }
 
+    /**
+     * 转到登录界面
+     */
     private void toLogin() {
         registerView.close();
         ApplicationUtils.startAndShow(loginView);
-    }
-
-    public void setUserService(UserServiceImpl userService) {
-        this.userService = userService;
-    }
-
-    public void setLoginView(LoginView loginView) {
-        this.loginView = loginView;
-    }
-
-    public void setRegisterView(RegisterView registerView) {
-        this.registerView = registerView;
     }
 }

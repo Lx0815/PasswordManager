@@ -2,14 +2,16 @@ package com.d.passwordmanager.views;
 
 import com.d.passwordmanager.controller.EditPasswordController;
 import com.d.passwordmanager.pojo.PasswordRecord;
-import javafx.application.Application;
 import com.d.passwordmanager.command.utils.ApplicationUtils;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.springframework.util.Assert;
+import org.springframework.util.ObjectUtils;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class EditPasswordView extends BaseView {
 
@@ -24,8 +26,13 @@ public class EditPasswordView extends BaseView {
         launch(args);
     }
 
-    public void start(Stage stage, PasswordRecord oldPasswordRecord) throws IOException {
-        editPasswordController.setOldPasswordRecord(oldPasswordRecord);
+    @Override
+    public void start(Stage stage, Object[] object) throws IOException {
+        Assert.notNull(object, "一个必要的参数为 null");
+        Assert.notEmpty(object, "一个必要的参数为 null");
+        PasswordRecord passwordRecord = (PasswordRecord) object[0];
+
+        editPasswordController.setOldPasswordRecord(passwordRecord);
         start(stage);
     }
 
@@ -43,6 +50,6 @@ public class EditPasswordView extends BaseView {
 
     @Override
     public void close() {
-        ApplicationUtils.close(stage);
+        stage.close();
     }
 }

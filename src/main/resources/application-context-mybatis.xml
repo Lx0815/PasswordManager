@@ -70,13 +70,6 @@
             <tx:method name="select*" propagation="REQUIRED" isolation="DEFAULT" read-only="false" timeout="10"/>
         </tx:attributes>
     </tx:advice>
-    <!--配置切点和切面-->
-    <aop:config>
-        <!--配置切点-->
-        <aop:pointcut id="service-select" expression="execution(* com.d.passwordmanager.service.*.select*(..))"/>
-        <!--配置切面-->
-        <aop:advisor advice-ref="select-advice" pointcut-ref="service-select"/>
-    </aop:config>
 
     <tx:advice id="update-advice">
         <tx:attributes>
@@ -84,7 +77,7 @@
         </tx:attributes>
     </tx:advice>
     <aop:config>
-        <aop:pointcut id="service-update" expression="execution(* com.d.passwordmanager.service.*.update*(..))"/>
+        <aop:pointcut id="service-update" expression="execution(* com.d.passwordmanager.service.impl.*.*(..))"/>
         <aop:advisor advice-ref="update-advice" pointcut-ref="service-update"/>
     </aop:config>
 </beans>

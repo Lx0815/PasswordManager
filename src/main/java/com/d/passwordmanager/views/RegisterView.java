@@ -29,6 +29,6 @@ public class RegisterView extends BaseView {
 
     @Override
     public void close() {
-        ApplicationUtils.close(stage);
+        stage.close();
     }
 }

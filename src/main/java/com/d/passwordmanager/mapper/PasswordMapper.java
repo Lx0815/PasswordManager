@@ -2,7 +2,6 @@ package com.d.passwordmanager.mapper;
 
 import com.d.passwordmanager.pojo.PasswordRecord;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -17,8 +16,6 @@ import java.util.List;
 //@Repository
 public interface PasswordMapper {
 
-//    List<PasswordRecord> selectAll();
-
     Integer updateById(PasswordRecord passwordRecord);
 
     Integer insertOne(PasswordRecord passwordRecord);
@@ -26,4 +23,6 @@ public interface PasswordMapper {
     Integer deleteByIds(@Param("ids") List<Integer> ids);
 
     List<PasswordRecord> selectByKeyword(@Param("keyword") String keyword);
+
+    void deleteAll();
 }

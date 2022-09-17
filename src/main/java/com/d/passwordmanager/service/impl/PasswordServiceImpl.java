@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * @author: Ding
  * @date: 2022/8/26 10:28
- * @description:
+ * @description: 实现了 PasswordService， 完成密码相关的操作
  * @modify:
  */
 
@@ -19,15 +19,16 @@ import java.util.List;
 public class PasswordServiceImpl implements PasswordService {
 
     private PasswordMapper passwordMapper;
-
     public void setPasswordMapper(PasswordMapper passwordMapper) {
         this.passwordMapper = passwordMapper;
     }
+
 
     @Override
     public List<PasswordRecord> selectAll() {
         return passwordMapper.selectByKeyword(null);
     }
+
 
     @Override
     public boolean updateByPasswordRecord(PasswordRecord passwordRecord) {
@@ -44,6 +45,11 @@ public class PasswordServiceImpl implements PasswordService {
     @Override
     public List<PasswordRecord> selectByKeyword(String keyword) {
         return passwordMapper.selectByKeyword(keyword);
+    }
+
+    @Override
+    public void deleteAll() {
+        passwordMapper.deleteAll();
     }
 
     @Override

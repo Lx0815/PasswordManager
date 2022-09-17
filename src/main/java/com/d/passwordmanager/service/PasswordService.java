@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * @author: Ding
  * @date: 2022/8/26 10:26
- * @description:
+ * @description: 处理密码相关的需求
  * @modify:
  */
 
@@ -22,4 +22,6 @@ public interface PasswordService {
     boolean deleteByList(List<PasswordRecord> deleteList);
 
     List<PasswordRecord> selectByKeyword(String keyword);
+
+    void deleteAll();
 }

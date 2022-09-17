@@ -27,7 +27,7 @@ public class IndexView extends BaseView {
         Scene scene = new Scene(parent);
         stage.setTitle("密码管理器 V1.0");
 
-        indexController.initIndex();
+        indexController.initView();
 
         stage.setScene(scene);
         stage.show();
@@ -35,7 +35,7 @@ public class IndexView extends BaseView {
 
 
     public void close() {
-        ApplicationUtils.close(stage);
+        stage.close();
     }
 
     public void setIndexController(IndexController indexController) {

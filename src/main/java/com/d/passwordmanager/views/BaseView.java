@@ -9,12 +9,17 @@ import java.io.IOException;
 /**
  * @author: Ding
  * @date: 2022/8/25 16:03
- * @description:
+ * @description: 该类定义了基本界面应有的方法
  * @modify:
  */
 
 
 public abstract class BaseView extends Application implements View {
+
+    @Override
+    public void start(Stage stage, Object[] params) throws IOException {
+
+    }
 
     @Override
     public void start(Stage stage) throws IOException {

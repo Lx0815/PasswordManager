@@ -1,11 +1,11 @@
 package com.d.passwordmanager.controller;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
 import com.d.passwordmanager.command.constant.PasswordStrength;
 import com.d.passwordmanager.command.utils.AlertUtils;
+import com.d.passwordmanager.command.utils.ApplicationUtils;
 import com.d.passwordmanager.pojo.PasswordRecord;
 import com.d.passwordmanager.service.PasswordService;
 import com.d.passwordmanager.views.CreatePasswordView;
@@ -15,10 +15,8 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
 import org.springframework.util.ObjectUtils;
 
 import static com.d.passwordmanager.command.utils.PasswordUtils.*;
@@ -26,7 +24,7 @@ import static com.d.passwordmanager.command.utils.PasswordUtils.*;
 /**
  * @author: Ding
  * @date: 2022/8/25 8:32
- * @description:
+ * @description: indexView 对应的控制器
  * @modify:
  */
 
@@ -140,7 +138,10 @@ public class IndexController {
         assert totalPasswordTipsLabel != null : "fx:id=\"totalPasswordTipsLabel\" was not injected: check your FXML file 'index.fxml'.";
     }
 
-    public void initIndex() {
+    /**
+     * 
+     */
+    public void initView() {
         initColumn();
 
         initOthers();
@@ -151,20 +152,21 @@ public class IndexController {
     }
 
     private void initColumn() {
+        // 通过筛选关键词获取密码记录
         passwordRecordList = passwordService.selectByKeyword(searchKeyword);
 
         passwordRecordSize = passwordRecordList.size();
 
         contentTableView.setEditable(true);
 
+        checkboxColumn.setStyle("-fx-alignment: center;");
+
         // 设置单元格值工厂
         checkboxColumn.setCellValueFactory(new PropertyValueFactory<>("selected"));
-        checkboxColumn.setStyle("-fx-alignment: center;");
         domainNameColumn.setCellValueFactory(new PropertyValueFactory<>("domainName"));
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
         accountColumn.setCellValueFactory(new PropertyValueFactory<>("account"));
         passwordColumn.setCellValueFactory(new PropertyValueFactory<>("passwordEcho"));
-
         passwordStrengthColumn.setCellValueFactory(new PropertyValueFactory<>("passwordStrength"));
 
         // 设置排序时比较规则
@@ -184,46 +186,37 @@ public class IndexController {
         accountColumn.setComparator(Comparator.naturalOrder());
         passwordStrengthColumn.setComparator(Comparator.naturalOrder());
 
-        // 使单元格可编辑
-//        setColumnEditable(true, new TableColumn[]{domainNameColumn, descriptionColumn, accountColumn});
-
         contentTableView.setItems(FXCollections.observableList(passwordRecordList));
     }
 
-
-    private void setColumnEditable(boolean isEdit, TableColumn<Object, String>... column) {
-
-        for (TableColumn<Object, String> tableColumn : column) {
-            if (isEdit) {
-                tableColumn.setEditable(true);
-                tableColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-            }
-        }
-    }
-
-
+    /**
+     * 打开编辑密码界面
+     *
+     * @param event 鼠标事件
+     */
     @FXML
     private void toEditView(TableColumn.CellEditEvent<PasswordRecord, String> event) {
-        try {
-            editPasswordView.start(new Stage(), event.getRowValue());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        ApplicationUtils.startAndShow(editPasswordView, event.getRowValue());
     }
 
-
+    /**
+     * 删除选择的密码，当 删除按钮 被点击时调用
+     *
+     * @param mouseEvent 鼠标事件
+     */
     @FXML
     public void deleteSelected(MouseEvent mouseEvent) {
         Optional<ButtonType> buttonType = AlertUtils.alert(Alert.AlertType.CONFIRMATION, "确认删除吗？");
+        // 选择了 取消 则不进行删除
         if (!ObjectUtils.nullSafeEquals(buttonType.get(), ButtonType.OK)) return;
 
+        // 获取所有项
         ObservableList<PasswordRecord> items = checkboxColumn.getTableView().getItems();
+        // 要删除的项
         List<PasswordRecord> deleteList = new LinkedList<>();
-        for (PasswordRecord item : items) {
-            if (item.getSelected().isSelected()) {
-                deleteList.add(item);
-            }
-        }
+        // 填充要删除的项
+        items.stream().filter(it -> it.getSelected().isSelected()).forEach(deleteList::add);
+        // 若没有要删除的则直接返回
         if (ObjectUtils.isEmpty(deleteList)) return;
 
         boolean isSuccess = passwordService.deleteByList(deleteList);
@@ -235,23 +228,31 @@ public class IndexController {
         }
     }
 
-
+    /**
+     * 增加一条密码记录
+     *
+     * @param event 鼠标事件
+     */
     @FXML
     void addOnePasswordRecord(MouseEvent event) {
         PasswordRecord passwordRecord = getPasswordRecordByTextFields(
                 domainNameTextField, descriptionTextField, accountTextField, passwordTextField
         );
-        if (ObjectUtils.isEmpty(passwordRecord)) return;
+
         boolean isSuccess = passwordService.insertOne(passwordRecord);
-        refresh(isSuccess);
         if (isSuccess) {
             AlertUtils.alert(Alert.AlertType.INFORMATION, "添加成功");
+            refresh();
+            removeRecordFromTextField();
         } else {
             AlertUtils.alert(Alert.AlertType.WARNING, "删除失败");
         }
-        removeRecordFromTextField();
     }
 
+    /**
+     * 当搜索按钮被点击
+     * @param event
+     */
     @FXML
     void doSearch(MouseEvent event) {
         String keyword = getSearchKeyWord();
@@ -262,6 +263,11 @@ public class IndexController {
         refresh();
     }
 
+    /**
+     * 移除搜索框的内容
+     *
+     * @param event
+     */
     @FXML
     void removeSearchTextField(MouseEvent event) {
         if (!ObjectUtils.isEmpty(searchKeyword)) {
@@ -271,22 +277,27 @@ public class IndexController {
         }
     }
 
+    /**
+     * 创建密码，即打开 createPasswordView
+     * @param mouseEvent
+     */
     @FXML
     public void createPassword(MouseEvent mouseEvent) {
-        try {
-            createPasswordView.start(new Stage());
-//            indexView.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-//        String password = RandomStringUtils.random(new Random().nextInt(8) + 8, PasswordStrength.ALLOW_CHARS);
-//        AlertUtils.alert("生成密码成功", "您生成的密码是：" + password);
+        ApplicationUtils.startAndShow(createPasswordView);
     }
 
+    /**
+     * 获取搜索框中的关键字
+     *
+     * @return
+     */
     private String getSearchKeyWord() {
         return searchTextField.getText();
     }
 
+    /**
+     * 移除四个搜索框中的内容
+     */
     private void removeRecordFromTextField() {
         domainNameTextField.setText(null);
         descriptionTextField.setText(null);
@@ -294,15 +305,20 @@ public class IndexController {
         passwordTextField.setText(null);
     }
 
-
-
+    /**
+     * 刷新
+     */
     public void refresh() {
         refresh(true);
     }
 
+    /**
+     * 如果 flag 为 true 则刷新
+     * @param flag 是否刷新
+     */
     public void refresh(boolean flag) {
         if (flag) {
-            initIndex();
+            initView();
 //            contentTableView.refresh();
         }
     }

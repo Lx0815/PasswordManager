@@ -1,8 +1,9 @@
 package com.d.passwordmanager.views;
 
 
-import com.d.passwordmanager.command.utils.ApplicationUtils;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 
 /**
  * @author: Ding
@@ -15,4 +16,6 @@ import javafx.stage.Stage;
 public interface View {
 
     void close();
+
+    void start(Stage stage, Object[] params) throws IOException;
 }

@@ -36,7 +36,6 @@ module com.d.passwordmanager {
     exports com.d.passwordmanager.command.utils;
     exports com.d.passwordmanager.pojo;
     exports com.d.passwordmanager.controller;
-    exports com.d.passwordmanager.controller.selfcontroller;
     exports com.d.passwordmanager.service;
     exports com.d.passwordmanager.service.impl;
     exports com.d.passwordmanager.mapper;

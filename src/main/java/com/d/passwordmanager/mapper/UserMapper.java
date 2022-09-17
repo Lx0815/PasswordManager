@@ -1,7 +1,6 @@
 package com.d.passwordmanager.mapper;
 
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
 /**
  * @author: Ding
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Repository;
  */
 
 
-//@Repository
 public interface UserMapper {
 
     Integer selectIdByPassword(@Param("password") String password);

@@ -1,17 +1,14 @@
 package com.d.passwordmanager.pojo;
 
 import com.d.passwordmanager.command.constant.PasswordStrength;
-import com.d.passwordmanager.controller.selfcontroller.MyStyleTextFieldOfPassWord;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.TextField;
 import org.springframework.util.ObjectUtils;
 
-import static com.d.passwordmanager.controller.selfcontroller.TextFieldFocusListener.getEcho;
 
 /**
  * @author: Ding
  * @date: 2022/8/26 9:55
- * @description:
+ * @description: 密码记录实体类， 对应 表password_record
  * @modify:
  */
 
@@ -31,7 +28,7 @@ public class PasswordRecord {
     // 仅用于记录当前密码记录是否被选中
     private CheckBox selected = new CheckBox();
 
-
+    // 仅用于隐藏密码时的替代显示
     private String passwordEcho;
 
     private PasswordStrength passwordStrength;

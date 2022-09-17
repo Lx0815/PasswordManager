@@ -1,27 +1,26 @@
-/**
- * Sample Skeleton for 'createPassword.fxml' Controller Class
- */
-
 package com.d.passwordmanager.controller;
 
-import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.*;
-import java.util.function.IntFunction;
-import java.util.stream.Stream;
 
-import com.d.passwordmanager.command.constant.PasswordStrength;
-import com.d.passwordmanager.command.utils.AlertUtils;
-import javafx.event.EventHandler;
+import com.d.passwordmanager.command.utils.ApplicationUtils;
+import com.d.passwordmanager.views.ShowCreatePasswordView;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
-import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import org.apache.commons.lang3.RandomStringUtils;
+
+/**
+ * @author: Ding
+ * @date: 2022/9/15 18:08:49
+ * @description: CreatePasswordView 对应的控制器
+ * @modify:
+ */
+
 
 public class CreatePasswordController {
 
@@ -35,16 +34,16 @@ public class CreatePasswordController {
     private FlowPane digitsFlowPanel; // Value injected by FXMLLoader
 
     @FXML // fx:id="includeDigit"
-    private CheckBox includeDigit; // Value injected by FXMLLoader
+    private CheckBox digitsCheckBox; // Value injected by FXMLLoader
 
     @FXML // fx:id="includeLowerCaseLetters"
-    private CheckBox includeLowerCaseLetters; // Value injected by FXMLLoader
+    private CheckBox lowerCaseCheckBox; // Value injected by FXMLLoader
 
     @FXML // fx:id="includeUppercaseLetter"
-    private CheckBox includeUppercaseLetter; // Value injected by FXMLLoader
+    private CheckBox upperCaseCheckBox; // Value injected by FXMLLoader
 
     @FXML // fx:id="includeSymbols"
-    private CheckBox includeSymbols; // Value injected by FXMLLoader
+    private CheckBox symbolsCheckBox; // Value injected by FXMLLoader
 
     @FXML // fx:id="lowerCaseFlowPanel"
     private FlowPane lowerCaseFlowPanel; // Value injected by FXMLLoader
@@ -61,22 +60,42 @@ public class CreatePasswordController {
     @FXML // fx:id="upperCaseFlowPanel"
     private FlowPane upperCaseFlowPanel; // Value injected by FXMLLoader
 
+
+    /* Spring */
+
+    private ShowCreatePasswordView showCreatePasswordView;
+    public void setShowCreatePasswordView(ShowCreatePasswordView showCreatePasswordView) {
+        this.showCreatePasswordView = showCreatePasswordView;
+    }
     /* Others */
+
+    /**
+     * 存放所有符号
+     */
     private List<CheckBox> symbolsList;
 
+    /**
+     * 存放所有数字
+     */
     private List<CheckBox> digitsList;
 
+    /**
+     * 存放所有小写字母
+     */
     private List<CheckBox> lowerCaseList;
 
+    /**
+     * 存放所有大写字母
+     */
     private List<CheckBox> upperCaseList;
 
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert digitsFlowPanel != null : "fx:id=\"digitsFlowPanel\" was not injected: check your FXML file 'createPassword.fxml'.";
-        assert includeDigit != null : "fx:id=\"includeDigit\" was not injected: check your FXML file 'createPassword.fxml'.";
-        assert includeLowerCaseLetters != null : "fx:id=\"includeLowerCaseLetters\" was not injected: check your FXML file 'createPassword.fxml'.";
-        assert includeUppercaseLetter != null : "fx:id=\"includeUppercaseLetter\" was not injected: check your FXML file 'createPassword.fxml'.";
+        assert digitsList != null : "fx:id=\"includeDigit\" was not injected: check your FXML file 'createPassword.fxml'.";
+        assert lowerCaseCheckBox != null : "fx:id=\"includeLowerCaseLetters\" was not injected: check your FXML file 'createPassword.fxml'.";
+        assert upperCaseCheckBox != null : "fx:id=\"includeUppercaseLetter\" was not injected: check your FXML file 'createPassword.fxml'.";
         assert lowerCaseFlowPanel != null : "fx:id=\"lowerCaseFlowPanel\" was not injected: check your FXML file 'createPassword.fxml'.";
         assert maxPasswordLength != null : "fx:id=\"maxPasswordLength\" was not injected: check your FXML file 'createPassword.fxml'.";
         assert minPasswordLength != null : "fx:id=\"minPasswordLength\" was not injected: check your FXML file 'createPassword.fxml'.";
@@ -84,46 +103,72 @@ public class CreatePasswordController {
 
     }
 
+    /**
+     * 初始化界面
+     */
     public void initView() {
 
+        // 初始化面板样式
         initFlowPanelStyle(digitsFlowPanel, lowerCaseFlowPanel, upperCaseFlowPanel, symbolsFlowPanel);
 
+        // 初始化容器
         symbolsList = Objects.requireNonNullElse(symbolsList, new ArrayList<>(32));
         digitsList = Objects.requireNonNullElse(digitsList, new ArrayList<>(10));
         lowerCaseList = Objects.requireNonNullElse(lowerCaseList, new ArrayList<>(26));
         upperCaseList = Objects.requireNonNullElse(upperCaseList, new ArrayList<>(26));
 
+        // 初始化面板内容
         initFlowPanelContent(digitsFlowPanel, lowerCaseFlowPanel, upperCaseFlowPanel, symbolsFlowPanel);
     }
 
+    /**
+     * 初始化面板内容，此处主要 创建组件后根据 Unicode 字符进行分流，使其添加到不同的 Panel 中
+     *
+     * @param digitsFlowPanel 数字面板
+     * @param lowerCaseFlowPanel 小写字母面板
+     * @param upperCaseFlowPanel 大写字母容器
+     * @param symbolsFlowPanel 符号容器
+     */
     private void initFlowPanelContent(FlowPane digitsFlowPanel, FlowPane lowerCaseFlowPanel, FlowPane upperCaseFlowPanel, FlowPane symbolsFlowPanel) {
         for (char i = '!'; i <= '~'; i++) {
             CheckBox temp = new CheckBox(String.valueOf(i));
 
             if (i >= '0' && i <= '9') {
-                process(digitsFlowPanel, temp, digitsList, includeDigit);
+                process(digitsFlowPanel, temp, digitsList, digitsCheckBox);
             } else if (i >= 'A' && i <= 'Z') {
-                process(upperCaseFlowPanel, temp, upperCaseList, includeUppercaseLetter);
+                process(upperCaseFlowPanel, temp, upperCaseList, upperCaseCheckBox);
             } else if (i >= 'a' && i <= 'z') {
-                process(lowerCaseFlowPanel, temp, lowerCaseList, includeLowerCaseLetters);
+                process(lowerCaseFlowPanel, temp, lowerCaseList, lowerCaseCheckBox);
             } else {
-                process(symbolsFlowPanel, temp, symbolsList, includeSymbols);
+                process(symbolsFlowPanel, temp, symbolsList, symbolsCheckBox);
             }
         }
     }
 
-    private void process(FlowPane digitsFlowPanel, CheckBox temp, List<CheckBox> list, CheckBox includeXxx) {
+    /**
+     * 真正的 使其添加到对应的 Panel 中
+     *
+     * @param flowPane 准备好的 Panel
+     * @param temp 要添加的 CheckBox 组件
+     * @param list 组件对应的容器
+     * @param xxxCheckBox 其对应的整合型 CheckBox，如 数字0 所在的 checkBox 将对应 {@link #digitsCheckBox}
+     */
+    private void process(FlowPane flowPane, CheckBox temp, List<CheckBox> list, CheckBox xxxCheckBox) {
         list.add(temp);
-        digitsFlowPanel.getChildren().add(temp);
+        flowPane.getChildren().add(temp);
         temp.setOnMouseClicked(event -> {
             if (list.stream().allMatch(CheckBox::isSelected)) {
-                includeXxx.setSelected(true);
+                xxxCheckBox.setSelected(true);
             } else {
-                includeXxx.setSelected(false);
+                xxxCheckBox.setSelected(false);
             };
         });
     }
 
+    /**
+     * 初始化面板样式
+     * @param flowPanes
+     */
     public void initFlowPanelStyle(FlowPane... flowPanes) {
         for (FlowPane flowPane : flowPanes) {
             //设置节点水平摆放
@@ -137,7 +182,11 @@ public class CreatePasswordController {
         }
     }
 
-
+    /**
+     * 选择/反选 所有数字，当 {@link #digitsCheckBox} 被选中时调用
+     *
+     * @param event 鼠标点击事件
+     */
     @FXML
     void selectAllDigits(MouseEvent event) {
         if (((CheckBox) event.getSource()).isSelected()) {
@@ -147,6 +196,11 @@ public class CreatePasswordController {
         }
     }
 
+    /**
+     * 选择/反选 所有小写字母，当 {@link #lowerCaseCheckBox} 被选中时调用
+     *
+     * @param event 鼠标点击事件
+     */
     @FXML
     void selectAllLowerCaseLetters(MouseEvent event) {
         if (((CheckBox) event.getSource()).isSelected()) {
@@ -156,6 +210,11 @@ public class CreatePasswordController {
         }
     }
 
+    /**
+     * 选择/反选 所有大写字母，当 {@link #upperCaseCheckBox} 被选中时调用
+     *
+     * @param event 鼠标点击事件
+     */
     @FXML
     void selectAllUpperCaseLetters(MouseEvent event) {
         if (((CheckBox) event.getSource()).isSelected()) {
@@ -165,6 +224,11 @@ public class CreatePasswordController {
         }
     }
 
+    /**
+     * 选择/反选 所有符号，当 {@link #symbolsCheckBox} 被选中时调用
+     *
+     * @param event 鼠标点击事件
+     */
     @FXML
     void selectAllSymbols(MouseEvent event) {
         if (((CheckBox) event.getSource()).isSelected()) {
@@ -174,17 +238,25 @@ public class CreatePasswordController {
         }
     }
 
+    /**
+     * 生成密码，当 生成 按钮被点击时调用
+     *
+     * @param mouseEvent 鼠标事件
+     */
     @FXML
     public void doCreatePassword(MouseEvent mouseEvent) {
         char[] chs = getAllSelect();
-//        AlertUtils.alert(Alert.AlertType.INFORMATION, Arrays.toString(chs));
         int minLen = Integer.parseInt(minPasswordLength.getText());
         int maxLen = Integer.parseInt(maxPasswordLength.getText());
         String password = RandomStringUtils.random(new Random().nextInt(maxLen - minLen + 1) + minLen, chs);
-        AlertUtils.alert("生成密码成功", "您生成的密码是：" + password);
-
+        ApplicationUtils.startAndShow(showCreatePasswordView, password);
     }
 
+    /**
+     * 获取所有已选中的字符
+     *
+     * @return
+     */
     private char[] getAllSelect() {
         List<Character> characterList = new LinkedList<>();
         digitsList.stream().filter(CheckBox::isSelected).forEach(checkBox -> characterList.add(checkBox.getText().charAt(0)));

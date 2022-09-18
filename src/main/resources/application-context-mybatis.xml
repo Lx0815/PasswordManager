@@ -63,17 +63,13 @@
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"/>
     </bean>
+
+
     <!--配置通知-->
-    <tx:advice id="select-advice">
+    <tx:advice id="update-advice">
         <!--配置事务参数-->
         <tx:attributes>
-            <tx:method name="select*" propagation="REQUIRED" isolation="DEFAULT" read-only="false" timeout="10"/>
-        </tx:attributes>
-    </tx:advice>
-
-    <tx:advice id="update-advice">
-        <tx:attributes>
-            <tx:method name="update*"/>
+            <tx:method name="update"/>
         </tx:attributes>
     </tx:advice>
     <aop:config>

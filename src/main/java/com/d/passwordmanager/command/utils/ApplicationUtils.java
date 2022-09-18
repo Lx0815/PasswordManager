@@ -1,8 +1,8 @@
 package com.d.passwordmanager.command.utils;
 
 import com.d.passwordmanager.views.BaseView;
+import com.d.passwordmanager.views.LoginView;
 import com.d.passwordmanager.views.MainApplication;
-import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import org.springframework.context.ApplicationContext;

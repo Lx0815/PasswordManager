@@ -25,7 +25,6 @@ module com.d.passwordmanager {
     requires spring.context;
     requires spring.core;
     requires spring.expression;
-    requires spring.jcl;
     requires spring.jdbc;
 
     requires spring.tx;
@@ -48,4 +47,6 @@ module com.d.passwordmanager {
     opens com.d.passwordmanager.service.impl to spring.core;
 
     opens com.d.passwordmanager.mapper to spring.core, spring.context, spring.test, spring.jdbc, spring.beans;
+    exports com.d.passwordmanager;
+    opens com.d.passwordmanager to javafx.fxml;
 }

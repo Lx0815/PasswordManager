@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.Light.Distant?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.effect.Lighting?>
 <?import javafx.scene.effect.Shadow?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.text.Font?>
-
-<Pane fx:id="registerPanel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.d.passwordmanager.controller.RegisterController">
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<Pane fx:id="registerPanel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+      prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.d.passwordmanager.controller.RegisterController">
     <children>
         <BorderPane prefHeight="400.0" prefWidth="600.0">
             <top>
@@ -19,7 +15,7 @@
                     <children>
                         <Label layoutX="152.0" layoutY="17.0" text="欢迎注册 Password Manager">
                             <font>
-                                <Font size="22.0" />
+                                <Font size="22.0"/>
                             </font>
                         </Label>
                     </children>
@@ -30,71 +26,73 @@
                     <children>
                         <Label layoutX="94.0" layoutY="25.0" text="请输入您的密码：">
                             <font>
-                                <Font size="16.0" />
+                                <Font size="16.0"/>
                             </font>
                         </Label>
                         <Label layoutX="14.0" layoutY="67.0" text="请输入您的第一个密保问题：">
                             <font>
-                                <Font size="16.0" />
+                                <Font size="16.0"/>
                             </font>
                         </Label>
-                  <Label layoutX="14.0" layoutY="138.0" text="请输入您的第二个密保问题：">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="14.0" layoutY="209.0" text="请输入您的第三个密保问题：">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="174.0" layoutY="106.0" text="答案：">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="176.0" layoutY="177.0" text="答案：">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="174.0" layoutY="241.0" text="答案：">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Label>
+                        <Label layoutX="14.0" layoutY="138.0" text="请输入您的第二个密保问题：">
+                            <font>
+                                <Font size="16.0"/>
+                            </font>
+                        </Label>
+                        <Label layoutX="14.0" layoutY="209.0" text="请输入您的第三个密保问题：">
+                            <font>
+                                <Font size="16.0"/>
+                            </font>
+                        </Label>
+                        <Label layoutX="174.0" layoutY="106.0" text="答案：">
+                            <font>
+                                <Font size="16.0"/>
+                            </font>
+                        </Label>
+                        <Label layoutX="176.0" layoutY="177.0" text="答案：">
+                            <font>
+                                <Font size="16.0"/>
+                            </font>
+                        </Label>
+                        <Label layoutX="174.0" layoutY="241.0" text="答案：">
+                            <font>
+                                <Font size="16.0"/>
+                            </font>
+                        </Label>
                     </children>
                 </Pane>
             </left>
             <center>
                 <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                     <children>
-                        <Separator layoutX="-200.0" layoutY="-10.0" prefHeight="12.0" prefWidth="600.0" />
-                        <TextField fx:id="passwordTextField" layoutX="20.0" layoutY="26.0" />
-                        <TextField fx:id="question1TextField" layoutX="20.0" layoutY="67.0" />
-                        <Button fx:id="registerButton" layoutY="292.0" mnemonicParsing="false" onMouseClicked="#doRegister" prefHeight="32.0" prefWidth="161.0" text="注册">
+                        <Separator layoutX="-200.0" layoutY="-10.0" prefHeight="12.0" prefWidth="600.0"/>
+                        <PasswordField fx:id="passwordTextField" layoutX="20.0" layoutY="26.0"/>
+                        <Label layoutX="176.0" layoutY="71.0" text="（必填）"/>
+                        <TextField fx:id="question1TextField" layoutX="20.0" layoutY="67.0"/>
+                        <TextField fx:id="answer1TextField" layoutX="20.0" layoutY="104.0"/>
+                        <Label layoutX="176.0" layoutY="30.0" text="（必填）"/>
+                        <TextField fx:id="question2TextField" layoutX="20.0" layoutY="139.0"/>
+                        <TextField fx:id="answer2TextField" layoutX="20.0" layoutY="175.0"/>
+                        <Label layoutX="176.0" layoutY="108.0" text="（必填）"/>
+                        <TextField fx:id="question3TextField" layoutX="20.0" layoutY="209.0"/>
+                        <TextField fx:id="answer3TextField" layoutX="20.0" layoutY="242.0"/>
+                        <Button fx:id="registerButton" layoutY="292.0" mnemonicParsing="false"
+                                onMouseClicked="#doRegister" prefHeight="32.0" prefWidth="161.0" text="注册">
                             <font>
-                                <Font size="16.0" />
+                                <Font size="16.0"/>
                             </font>
                             <effect>
-                                <Lighting diffuseConstant="2.0" specularConstant="0.0" specularExponent="0.0" surfaceScale="0.0">
+                                <Lighting diffuseConstant="2.0" specularConstant="0.0" specularExponent="0.0"
+                                          surfaceScale="0.0">
                                     <bumpInput>
-                                        <Shadow />
+                                        <Shadow/>
                                     </bumpInput>
                                     <light>
-                                        <Light.Distant />
+                                        <Light.Distant/>
                                     </light>
                                 </Lighting>
                             </effect>
                         </Button>
-                  <TextField fx:id="question2TextField" layoutX="20.0" layoutY="139.0" />
-                  <Label layoutX="176.0" layoutY="71.0" text="（必填）" />
-                  <Label layoutX="176.0" layoutY="30.0" text="（必填）" />
-                  <TextField fx:id="question3TextField" layoutX="20.0" layoutY="209.0" />
-                  <TextField fx:id="answer1TextField" layoutX="20.0" layoutY="104.0" />
-                  <TextField fx:id="answer2TextField" layoutX="20.0" layoutY="175.0" />
-                  <TextField fx:id="answer3TextField" layoutX="20.0" layoutY="242.0" />
-                  <Label layoutX="176.0" layoutY="108.0" text="（必填）" />
                     </children>
                 </Pane>
             </center>

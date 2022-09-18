@@ -63,13 +63,14 @@ public class PasswordUtils {
     }
 
     /**
-     * 从与 {@link PasswordRecord} 的可编辑字段对应的 TextField 输入框中获取密码对象
+     * 从与 {@link PasswordRecord} 的可编辑字段对应的 TextField 输入框中获取密码对象。
+     * 需要注意的是该方法可能返回 NULL
      *
      * @param domainNameTextField 域名字段输入框
      * @param descriptionTextField 描述字段输入框
      * @param accountTextField 账户字段输入框
      * @param passwordTextField 面膜字段输入框
-     * @return 返回用户输入的 {@link PasswordRecord} 对象
+     * @return 返回用户输入的 {@link PasswordRecord} 对象，若返回 NULL 则表示用户还有字段未输入
      */
     public static PasswordRecord getPasswordRecordByTextFields(TextField domainNameTextField,
                                                                TextField descriptionTextField,

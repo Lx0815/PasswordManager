@@ -13,6 +13,7 @@ import com.d.passwordmanager.views.RegisterView;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -44,7 +45,7 @@ public class RegisterController {
     private TextField answer3TextField; // Value injected by FXMLLoader
 
     @FXML // fx:id="passwordTextField"
-    private TextField passwordTextField; // Value injected by FXMLLoader
+    private PasswordField passwordTextField; // Value injected by FXMLLoader
 
     @FXML // fx:id="question1TextField"
     private TextField question1TextField; // Value injected by FXMLLoader

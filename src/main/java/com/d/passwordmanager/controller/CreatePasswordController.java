@@ -3,16 +3,19 @@ package com.d.passwordmanager.controller;
 import java.net.URL;
 import java.util.*;
 
+import com.d.passwordmanager.command.utils.AlertUtils;
 import com.d.passwordmanager.command.utils.ApplicationUtils;
 import com.d.passwordmanager.views.ShowCreatePasswordView;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
+import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.util.ObjectUtils;
 
 /**
  * @author: Ding
@@ -248,6 +251,22 @@ public class CreatePasswordController {
         char[] chs = getAllSelect();
         int minLen = Integer.parseInt(minPasswordLength.getText());
         int maxLen = Integer.parseInt(maxPasswordLength.getText());
+
+        if (minLen <= 0 || maxLen <= 0) {
+            AlertUtils.alert(Alert.AlertType.WARNING, "请注意，密码长度不能为负数或零");
+            return;
+        }
+        if (ObjectUtils.isEmpty(chs)) {
+            AlertUtils.alert(Alert.AlertType.WARNING, "请选择您的密码需要包含的字符");
+            return;
+        }
+        // 两数交换
+        if (minLen > maxLen) {
+            minLen ^= maxLen;
+            maxLen ^= minLen;
+            minLen ^= maxLen;
+        }
+
         String password = RandomStringUtils.random(new Random().nextInt(maxLen - minLen + 1) + minLen, chs);
         ApplicationUtils.startAndShow(showCreatePasswordView, password);
     }

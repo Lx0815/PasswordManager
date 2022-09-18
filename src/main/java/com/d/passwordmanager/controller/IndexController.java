@@ -238,6 +238,7 @@ public class IndexController {
         PasswordRecord passwordRecord = getPasswordRecordByTextFields(
                 domainNameTextField, descriptionTextField, accountTextField, passwordTextField
         );
+        if (ObjectUtils.isEmpty(passwordRecord)) return;
 
         boolean isSuccess = passwordService.insertOne(passwordRecord);
         if (isSuccess) {

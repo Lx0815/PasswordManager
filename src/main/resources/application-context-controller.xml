@@ -13,7 +13,7 @@
         <property name="userService" ref="userService"/>
         <property name="loginView" ref="loginView"/>
         <property name="indexView" ref="indexView"/>
-        <property name="passwordService" ref="passwordService"/>
+        <property name="findPasswordView" ref="findPasswordView"/>
     </bean>
 
     <bean id="registerController" class="com.d.passwordmanager.controller.RegisterController">
@@ -39,4 +39,9 @@
     </bean>
 
     <bean id="showCreatePasswordController" class="com.d.passwordmanager.controller.ShowCreatePasswordController"/>
+
+    <bean id="findPasswordController" class="com.d.passwordmanager.controller.FindPasswordController">
+        <property name="userService" ref="userService"/>
+        <property name="findPasswordView" ref="findPasswordView"/>
+    </bean>
 </beans>

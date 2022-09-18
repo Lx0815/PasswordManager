@@ -40,5 +40,6 @@
             <Cursor fx:constant="DEFAULT" />
          </cursor>
       </Button>
+      <Label layoutX="522.0" layoutY="339.0" onMouseClicked="#toFindPassword" text="忘记密码" underline="true" />
    </children>
 </Pane>

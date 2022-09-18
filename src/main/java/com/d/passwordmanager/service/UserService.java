@@ -1,5 +1,9 @@
 package com.d.passwordmanager.service;
 
+import com.d.passwordmanager.pojo.User;
+
+import java.util.List;
+
 /**
  * @author: Ding
  * @date: 2022/8/20 15:20
@@ -12,13 +16,14 @@ public interface UserService {
 
     boolean login(String password);
 
-    Integer getErrorCount();
+    boolean register(User user);
 
-    void setErrorCount(Integer newErrorCount);
+    List<String> selectQuestions();
 
-    void deleteUser();
+    boolean checkAnswer(String answer1, String answer2, String answer3);
 
-    boolean register(String passwordStr, String emailStr);
+    boolean updatePassword(String password);
 
-    Integer selectCount();
+    Integer selectUserCount();
+
 }

@@ -1,7 +1,10 @@
 package com.d.passwordmanager.pojo;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.StringProperty;
+
+import org.springframework.util.ObjectUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author: Ding
@@ -16,83 +19,110 @@ public class User {
     /**
      * id
      */
-    private IntegerProperty id;
+    private Integer id;
 
     /**
      * 用户密码
      */
-    private StringProperty password;
+    private String password;
 
     /**
-     * 密保问题
+     * 密保问题和答案
      */
-    private StringProperty question;
+    private String question1;
 
-    /**
-     * 密保问题答案
-     */
-    private StringProperty answer;
+    private String answer1;
 
-    private IntegerProperty errorCount;
+    private String question2;
+
+    private String answer2;
+
+    private String question3;
+
+    private String answer3;
 
     public User() {
     }
 
-    public User(StringProperty password, StringProperty question, StringProperty answer, IntegerProperty errorCount) {
+    public User(String password, String question1, String answer1, String question2, String answer2, String question3, String answer3) {
         this.password = password;
-        this.question = question;
-        this.answer = answer;
-        this.errorCount = errorCount;
+        this.question1 = question1;
+        this.answer1 = answer1;
+        this.question2 = question2;
+        this.answer2 = answer2;
+        this.question3 = question3;
+        this.answer3 = answer3;
     }
 
-    public StringProperty getPassword() {
-        return password;
-    }
-
-    public void setPassword(StringProperty password) {
-        this.password = password;
-    }
-
-    public StringProperty getQuestion() {
-        return question;
-    }
-
-    public void setQuestion(StringProperty question) {
-        this.question = question;
-    }
-
-    public StringProperty getAnswer() {
-        return answer;
-    }
-
-    public void setAnswer(StringProperty answer) {
-        this.answer = answer;
-    }
-
-    public IntegerProperty getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(IntegerProperty id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public IntegerProperty getErrorCount() {
-        return errorCount;
+    public String getPassword() {
+        return password;
     }
 
-    public void setErrorCount(IntegerProperty errorCount) {
-        this.errorCount = errorCount;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", password='" + password + '\'' +
-                ", question='" + question + '\'' +
-                ", answer='" + answer + '\'' +
-                ", errorCount=" + errorCount +
-                '}';
+    public String getQuestion1() {
+        return question1;
+    }
+
+    public void setQuestion1(String question1) {
+        this.question1 = question1;
+    }
+
+    public String getAnswer1() {
+        return answer1;
+    }
+
+    public void setAnswer1(String answer1) {
+        this.answer1 = answer1;
+    }
+
+    public String getQuestion2() {
+        return question2;
+    }
+
+    public void setQuestion2(String question2) {
+        this.question2 = question2;
+    }
+
+    public String getAnswer2() {
+        return answer2;
+    }
+
+    public void setAnswer2(String answer2) {
+        this.answer2 = answer2;
+    }
+
+    public String getQuestion3() {
+        return question3;
+    }
+
+    public void setQuestion3(String question3) {
+        this.question3 = question3;
+    }
+
+    public String getAnswer3() {
+        return answer3;
+    }
+
+    public void setAnswer3(String answer3) {
+        this.answer3 = answer3;
+    }
+
+    public List<String> getQuestions() {
+        List<String> questionList = new ArrayList<>(3);
+        questionList.add(question1);
+        questionList.add(question2);
+        questionList.add(question3);
+        return questionList;
     }
 }

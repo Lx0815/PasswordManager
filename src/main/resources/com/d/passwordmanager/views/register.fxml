@@ -28,21 +28,41 @@
             <left>
                 <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                     <children>
-                        <Label layoutX="72.0" layoutY="75.0" text="请输入您的密码：">
+                        <Label layoutX="94.0" layoutY="25.0" text="请输入您的密码：">
                             <font>
                                 <Font size="16.0" />
                             </font>
                         </Label>
-                        <Label layoutX="72.0" layoutY="169.0" text="请输入您的邮箱：">
+                        <Label layoutX="14.0" layoutY="67.0" text="请输入您的第一个密保问题：">
                             <font>
                                 <Font size="16.0" />
                             </font>
                         </Label>
-                        <Label layoutX="136.0" layoutY="207.0" prefHeight="21.0" prefWidth="371.0" text="tip：邮箱仅在密码错误次数达到三次时用于接收所有的数据" textFill="RED">
-                            <font>
-                                <Font size="14.0" />
-                            </font>
-                        </Label>
+                  <Label layoutX="14.0" layoutY="138.0" text="请输入您的第二个密保问题：">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="14.0" layoutY="209.0" text="请输入您的第三个密保问题：">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="174.0" layoutY="106.0" text="答案：">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="176.0" layoutY="177.0" text="答案：">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="174.0" layoutY="241.0" text="答案：">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
                     </children>
                 </Pane>
             </left>
@@ -50,9 +70,9 @@
                 <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                     <children>
                         <Separator layoutX="-200.0" layoutY="-10.0" prefHeight="12.0" prefWidth="600.0" />
-                        <TextField fx:id="passwordTextField" layoutY="74.0" />
-                        <TextField fx:id="emailTextField" layoutY="169.0" />
-                        <Button fx:id="registerButton" layoutY="273.0" mnemonicParsing="false" onMouseClicked="#doRegister" prefHeight="32.0" prefWidth="161.0" text="注册">
+                        <TextField fx:id="passwordTextField" layoutX="20.0" layoutY="26.0" />
+                        <TextField fx:id="question1TextField" layoutX="20.0" layoutY="67.0" />
+                        <Button fx:id="registerButton" layoutY="292.0" mnemonicParsing="false" onMouseClicked="#doRegister" prefHeight="32.0" prefWidth="161.0" text="注册">
                             <font>
                                 <Font size="16.0" />
                             </font>
@@ -67,6 +87,14 @@
                                 </Lighting>
                             </effect>
                         </Button>
+                  <TextField fx:id="question2TextField" layoutX="20.0" layoutY="139.0" />
+                  <Label layoutX="176.0" layoutY="71.0" text="（必填）" />
+                  <Label layoutX="176.0" layoutY="30.0" text="（必填）" />
+                  <TextField fx:id="question3TextField" layoutX="20.0" layoutY="209.0" />
+                  <TextField fx:id="answer1TextField" layoutX="20.0" layoutY="104.0" />
+                  <TextField fx:id="answer2TextField" layoutX="20.0" layoutY="175.0" />
+                  <TextField fx:id="answer3TextField" layoutX="20.0" layoutY="242.0" />
+                  <Label layoutX="176.0" layoutY="108.0" text="（必填）" />
                     </children>
                 </Pane>
             </center>

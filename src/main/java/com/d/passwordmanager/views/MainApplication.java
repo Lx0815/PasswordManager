@@ -19,7 +19,7 @@ public class MainApplication extends Application {
     public static void main(String[] args) {
         ApplicationContext context = ApplicationUtils.context;
         UserService userService = context.getBean(UserService.class);
-        Integer userCount = userService.selectCount();
+        Integer userCount = userService.selectUserCount();
         if (ObjectUtils.nullSafeEquals(userCount, 1)) {
             firstView = context.getBean(LoginView.class);
         } else {

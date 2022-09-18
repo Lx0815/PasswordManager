@@ -10,20 +10,6 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<!--
-    开发计划：
-        1. Index 页面大小固定，不能调节
-        2. 密码导入功能
-            1. Excel.csv 导入
-            2. JSON 导入
-        3. 密码导出功能
-            1. 导出为 Excel.csv
-            2. 导出为 JSON
-        4. 弱密码添加强调背景色
-        5. 注销账号后密码发送至邮箱
-        6. 修改软件登录密码
-        7.
--->
 
 <BorderPane fx:id="indexPanel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="512.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.d.passwordmanager.controller.IndexController">
     <bottom>

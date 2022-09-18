@@ -87,12 +87,20 @@ public class PasswordUtils {
             return null;
         }
         if (!checkPassword(password)) {
-            AlertUtils.alert(Alert.AlertType.WARNING, "密码格式错误，请使用大小写英文字母、数字以及下列符号`~!@#$%^&*()_+-=[]{}\\\\|;:'\\\",<.>/?\"");
+            alertPasswordError();
         }
 
         PasswordStrength passwordStrength = calculatePasswordStrength(password);
 
         return new PasswordRecord(domainName, description, account, password, passwordStrength);
+    }
+
+    /**
+     * 弹错密码格式错误的提示。相当于
+     * AlertUtils.alert(Alert.AlertType.WARNING, "密码格式错误，请使用大小写英文字母、数字以及下列符号`~!@#$%^&*()_+-=[]{}\\\\|;:'\\\",<.>/?\"");
+     */
+    public static void alertPasswordError() {
+        AlertUtils.alert(Alert.AlertType.WARNING, "密码格式错误，请使用大小写英文字母、数字以及下列符号`~!@#$%^&*()_+-=[]{}\\\\|;:'\\\",<.>/?\"");
     }
 
     /**

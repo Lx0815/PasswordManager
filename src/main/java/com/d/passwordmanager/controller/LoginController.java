@@ -1,13 +1,12 @@
 package com.d.passwordmanager.controller;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.d.passwordmanager.command.utils.AlertUtils;
 import com.d.passwordmanager.command.utils.ApplicationUtils;
-import com.d.passwordmanager.service.PasswordService;
 import com.d.passwordmanager.service.UserService;
+import com.d.passwordmanager.views.FindPasswordView;
 import com.d.passwordmanager.views.IndexView;
 import com.d.passwordmanager.views.LoginView;
 import javafx.fxml.FXML;
@@ -17,7 +16,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 
 /**
  * @author: Ding
@@ -70,9 +68,9 @@ public class LoginController {
         this.indexView = indexView;
     }
 
-    private PasswordService passwordService;
-    public void setPasswordService(PasswordService passwordService) {
-        this.passwordService = passwordService;
+    private FindPasswordView findPasswordView;
+    public void setFindPasswordView(FindPasswordView findPasswordView) {
+        this.findPasswordView = findPasswordView;
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
@@ -106,40 +104,8 @@ public class LoginController {
         if (isSuccess) {
             toIndexView();
         } else {
-            int errorCount = updateErrorCount();
-            if (errorCount < 3 && errorCount > 0) {
-                AlertUtils.alert(Alert.AlertType.WARNING, "登录失败", "密码错误，您还剩 " + (3 - errorCount) + " 次机会");
-            } else {
-                AlertUtils.alert(Alert.AlertType.WARNING, "登录失败", "密码第三次输入错误，为保护数据安全，仅存的备份将会通过绑定邮箱发送给您，请注意查收。当前本机上所有数据已自动销毁。");
-            }
+            AlertUtils.alert(Alert.AlertType.WARNING, "登录失败", "密码错误");
         }
-    }
-
-
-    /**
-     * 更新密码错误次数
-     * @return 返回新的密码错误次数
-     */
-    private Integer updateErrorCount() {
-        Integer oldErrorCount = userService.getErrorCount();
-
-        if (oldErrorCount == 2) {
-            // 发送所有数据到用户邮箱
-            // 清空数据
-            deleteAll();
-        }
-        Integer newErrorCount = oldErrorCount + 1;
-        userService.setErrorCount(newErrorCount);
-        return newErrorCount;
-    }
-
-    /**
-     * 删除所有数据
-     */
-    private void deleteAll() {
-        // 清空用户表
-        userService.deleteUser();
-        passwordService.deleteAll();
     }
 
     /**
@@ -148,5 +114,14 @@ public class LoginController {
     private void toIndexView() {
         ApplicationUtils.startAndShow(indexView);
         loginView.close();
+    }
+
+    /**
+     * 转到 找回密码的页面
+     * @param mouseEvent 鼠标点击事件
+     */
+    @FXML
+    public void toFindPassword(MouseEvent mouseEvent) {
+        ApplicationUtils.startAndShow(findPasswordView);
     }
 }

@@ -1,11 +1,11 @@
 package com.d.passwordmanager.service.impl;
 
-import static com.d.passwordmanager.command.constant.ErrorCode.*;
 import com.d.passwordmanager.mapper.UserMapper;
+import com.d.passwordmanager.pojo.User;
 import com.d.passwordmanager.service.UserService;
-import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -25,34 +25,39 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean login(String password) {
-        Integer id = userMapper.selectIdByPassword(password);
-        return Objects.nonNull(id);
+        Integer count = userMapper.selectCountByPassword(password);
+        return ObjectUtils.nullSafeEquals(count, 1);
     }
 
     @Override
-    public Integer getErrorCount() {
-        Integer errorCount = userMapper.selectErrorCount();
-        return Objects.requireNonNullElse(errorCount, NO_DATA.toInteger());
+    public boolean register(User user) {
+        return userMapper.insertOne(user) == 1;
     }
 
     @Override
-    public void setErrorCount(Integer newErrorCount) {
-        userMapper.updateErrorCount(newErrorCount);
+    public List<String> selectQuestions() {
+        return userMapper.selectUser().getQuestions();
     }
 
     @Override
-    public void deleteUser() {
-        userMapper.deleteAll();
+    public boolean checkAnswer(String answer1, String answer2, String answer3) {
+        User user = userMapper.selectUser();
+        return (ObjectUtils.nullSafeEquals(user.getAnswer1(), answer1))
+                && (ObjectUtils.nullSafeEquals(user.getAnswer2(), answer2))
+                && (ObjectUtils.nullSafeEquals(user.getAnswer3(), answer3));
     }
 
     @Override
-    public boolean register(String password, String email) {
-        Integer rows = userMapper.insertOne(password, email);
-        return ObjectUtils.nullSafeEquals(rows, 1);
+    public boolean updatePassword(String password) {
+        Integer id = userMapper.selectId();
+        User user = new User();
+        user.setPassword(password);
+        user.setId(id);
+        return userMapper.updateById(user) == 1;
     }
 
     @Override
-    public Integer selectCount() {
-        return userMapper.selectCount();
+    public Integer selectUserCount() {
+        return userMapper.selectUserCount();
     }
 }

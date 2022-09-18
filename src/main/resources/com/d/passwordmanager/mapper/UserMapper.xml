@@ -2,27 +2,55 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.d.passwordmanager.mapper.UserMapper">
     <insert id="insertOne">
-        INSERT INTO user (password, email)
-        VALUES (#{password}, #{email})
+        INSERT INTO user (password, question1, answer1, question2, answer2, question3, answer3)
+        VALUES (#{password}, #{question1}, #{answer1}, #{question2}, #{answer2}, #{question3}, #{answer3})
     </insert>
-    <update id="updateErrorCount">
+    <update id="updateById">
         UPDATE user
-        SET error_count = #{newErrorCount}
+        <set>
+            <if test="password != null and password != ''">
+                password = #{password} ,
+            </if>
+            <if test="question1 != null and question1 != ''">
+                question1 = #{question1} ,
+            </if>
+            <if test="answer1 != null and answer1 != ''">
+                answer1 = #{answer1} ,
+            </if>
+            <if test="question2 != null and question2 != ''">
+                question2 = #{question2} ,
+            </if>
+            <if test="answer2 != null and answer2 != ''">
+                answer2 = #{answer2} ,
+            </if>
+            <if test="question3 != null and question3 != ''">
+                question3 = #{question3} ,
+            </if>
+            <if test="answer3 != null and answer3 != ''">
+                answer3 = #{answer3} ,
+            </if>
+        </set>
+        <where>
+            id = #{id}
+        </where>
     </update>
-    <delete id="deleteAll">
-        DELETE FROM user
-    </delete>
-
-    <select id="selectIdByPassword" resultType="java.lang.Integer">
+    <select id="selectUser" resultType="user">
+        SELECT id, password, question1, answer1, question2, answer2, question3, answer3
+        FROM user
+        LIMIT 0 , 1
+    </select>
+    <select id="selectId" resultType="java.lang.Integer">
         SELECT id
         FROM user
+        LIMIT 0, 1
+    </select>
+    <select id="selectUserCount" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM user
+    </select>
+    <select id="selectCountByPassword" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM user
         WHERE password = #{password}
-    </select>
-    <select id="selectErrorCount" resultType="java.lang.Integer">
-        SELECT error_count
-        from user
-    </select>
-    <select id="selectCount" resultType="java.lang.Integer">
-        SELECT COUNT(*) FROM user
     </select>
 </mapper>

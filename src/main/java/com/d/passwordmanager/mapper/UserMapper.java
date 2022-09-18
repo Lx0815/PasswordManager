@@ -1,5 +1,6 @@
 package com.d.passwordmanager.mapper;
 
+import com.d.passwordmanager.pojo.User;
 import org.apache.ibatis.annotations.Param;
 
 /**
@@ -12,17 +13,15 @@ import org.apache.ibatis.annotations.Param;
 
 public interface UserMapper {
 
-    Integer selectIdByPassword(@Param("password") String password);
+    User selectUser();
 
-    Integer selectErrorCount();
+    Integer insertOne(User user);
 
-    void updateErrorCount(@Param("newErrorCount") Integer newErrorCount);
+    Integer selectId();
 
-    void deleteAll();
+    Integer updateById(User user);
 
-    Integer insertOne(@Param("password") String password,
-                      @Param("email") String email);
+    Integer selectUserCount();
 
-    Integer selectCount();
-
+    Integer selectCountByPassword(@Param("password") String password);
 }

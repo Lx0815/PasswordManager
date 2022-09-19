@@ -12,6 +12,8 @@ import com.d.passwordmanager.views.CreatePasswordView;
 import com.d.passwordmanager.views.EditPasswordView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -186,6 +188,15 @@ public class IndexController {
         accountColumn.setComparator(Comparator.naturalOrder());
         passwordStrengthColumn.setComparator(Comparator.naturalOrder());
 
+        // 设置点击事件
+        contentTableView.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                PasswordRecord selectedItem = contentTableView.getSelectionModel().getSelectedItem();
+                // 防止点击到的位置没有项导致 NPE
+                if (ObjectUtils.isEmpty(selectedItem)) return;
+                ApplicationUtils.startAndShow(editPasswordView, selectedItem);
+            }
+        });
         contentTableView.setItems(FXCollections.observableList(passwordRecordList));
     }
 

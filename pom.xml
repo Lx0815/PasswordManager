@@ -149,12 +149,30 @@
             <version>1.2.3</version>
         </dependency>
 
+        <!-- 生成密码 -->
         <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>3.12.0</version>
         </dependency>
+
+        <!-- 密码加密 -->
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.15</version>
+        </dependency>
+
+        <!-- UI 美化 -->
+        <dependency>
+            <groupId>org.kordamp.bootstrapfx</groupId>
+            <artifactId>bootstrapfx-core</artifactId>
+            <version>0.4.0</version>
+        </dependency>
+
+
+
 
 
     </dependencies>
@@ -217,7 +235,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <!-- 可以增加main函数入口，可有可无-->
-                            <mainClass>com.d.passwordmanager/com.d.passwordmanager.Main</mainClass>
+                            <mainClass>com.d.passwordmanager.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -237,7 +255,7 @@
                 <version>8.8.3</version>
                 <configuration>
                     <vendor>D</vendor>
-                    <mainClass>com.d.passwordmanager/com.d.passwordmanager.Main</mainClass>
+                    <mainClass>com.d.passwordmanager.Main</mainClass>
                 </configuration>
             </plugin>
             <plugin>
@@ -258,7 +276,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>com.d.passwordmanager/com.d.passwordmanager.Main</mainClass> <!-- 此处为主入口-->
+                            <mainClass>com.d.passwordmanager.Main</mainClass> <!-- 此处为主入口-->
                         </manifest>
                     </archive>
                 </configuration>
@@ -272,7 +290,7 @@
                         <!-- 运行的默认配置： mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>com.d.passwordmanager/com.d.passwordmanager.Main</mainClass>
+                            <mainClass>com.d.passwordmanager.Main</mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>

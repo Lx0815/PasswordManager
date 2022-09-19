@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <import resource="application-context-mybatis.xml"/>
 
@@ -14,4 +16,24 @@
         <property name="passwordMapper" ref="passwordMapper"/>
     </bean>
 
+
+    <bean id="passwordEncodeDecode" class="com.d.passwordmanager.service.aop.PasswordEncodeDecode"/>
+
+    <!-- 配置 AOP 代理 -->
+    <aop:config>
+        <!-- 配置切入点 -->
+        <aop:pointcut id="encode" expression="execution(* com.d.passwordmanager.service.impl.PasswordServiceImpl.insertOne(..))
+                                                or execution(* com.d.passwordmanager.service.impl.PasswordServiceImpl.updateByPasswordRecord(..))"/>
+        <aop:pointcut id="decode" expression="execution(* com.d.passwordmanager.service.impl.PasswordServiceImpl.selectByKeyword(..))"/>
+        <aop:pointcut id="strengthEncode" expression="execution(* com.d.passwordmanager.service.impl.UserServiceImpl.register(..))
+                                                or execution(* com.d.passwordmanager.service.impl.UserServiceImpl.login(..))
+                                                or execution(* com.d.passwordmanager.service.impl.UserServiceImpl.updatePassword(..))"/>
+
+        <!-- 配置切面 -->
+        <aop:aspect ref="passwordEncodeDecode">
+            <aop:around method="encode" pointcut-ref="encode"/>
+            <aop:around method="decode" pointcut-ref="decode"/>
+            <aop:around method="strengthEncode" pointcut-ref="strengthEncode"/>
+        </aop:aspect>
+    </aop:config>
 </beans>

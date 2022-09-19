@@ -1,5 +1,6 @@
 package com.d.passwordmanager.service.impl;
 
+import com.d.passwordmanager.command.utils.PasswordUtils;
 import com.d.passwordmanager.mapper.UserMapper;
 import com.d.passwordmanager.pojo.User;
 import com.d.passwordmanager.service.UserService;

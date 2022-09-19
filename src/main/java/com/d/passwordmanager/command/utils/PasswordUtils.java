@@ -4,8 +4,12 @@ import com.d.passwordmanager.command.constant.PasswordStrength;
 import com.d.passwordmanager.pojo.PasswordRecord;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.codec.digest.DigestUtils;
+import org.springframework.util.Base64Utils;
 import org.springframework.util.ObjectUtils;
 
+import java.nio.charset.StandardCharsets;
 import java.util.regex.Pattern;
 import static com.d.passwordmanager.command.constant.PasswordStrength.*;
 
@@ -45,6 +49,8 @@ public class PasswordUtils {
      * 匹配大小写字母的正则表达式
      */
     public static final String LETTERS_EXP = "[a-zA-Z]";
+
+    private static final String key = ".;[]'/";
 
     /**
      * 校验密码是否正确，即校验密码是否都由 {@link #ALLOW_CHARS} 中的字符所组成
@@ -158,5 +164,36 @@ public class PasswordUtils {
         if (ObjectUtils.nullSafeEquals(newPasswordRecord.getAccount(), oldPasswordRecord.getAccount())) {
             newPasswordRecord.setAccount(null);
         }
+    }
+
+    /**
+     * 强加密密码，加密后无法进行解密
+     *
+     * @param password 要加密的密码
+     * @return 返回强加密后的密码
+     */
+    public static String strengthEncryption(String password) {
+        return new String(DigestUtils.md5(Base64.encodeBase64String(DigestUtils.md5(password + key)) + key));
+    }
+
+    /**
+     * 弱加密密码，可解密
+     *
+     * @param password 密码
+     * @return 返回弱加密的密码
+     */
+    public static String encode(String password) {
+        return Base64.encodeBase64String((key + password + key).getBytes(StandardCharsets.UTF_8));
+    }
+
+    /**
+     * 对弱加密密码进行解密
+     *
+     * @param password 密码
+     * @return 返回真实的密码
+     */
+    public static String decode(String password) {
+        String pwd = new String(Base64.decodeBase64(password));
+        return pwd.substring(key.length(), pwd.length() - key.length());
     }
 }

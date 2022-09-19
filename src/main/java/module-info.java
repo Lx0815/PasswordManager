@@ -19,6 +19,8 @@ module com.d.passwordmanager {
     requires logback.classic;
     requires org.aspectj.weaver;
     requires org.apache.commons.lang3;
+    requires org.kordamp.bootstrapfx.core;
+    requires org.apache.commons.codec;
 
     requires spring.aop;
     requires spring.beans;
@@ -45,6 +47,7 @@ module com.d.passwordmanager {
     opens com.d.passwordmanager.views to javafx.fxml;
     opens com.d.passwordmanager.service to javafx.fxml, spring.core;
     opens com.d.passwordmanager.service.impl to spring.core;
+    opens com.d.passwordmanager.service.aop to spring.core, spring.beans, spring.aop;
 
     opens com.d.passwordmanager.mapper to spring.core, spring.context, spring.test, spring.jdbc, spring.beans;
     exports com.d.passwordmanager;

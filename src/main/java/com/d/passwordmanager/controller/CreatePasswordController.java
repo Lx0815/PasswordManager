@@ -5,7 +5,8 @@ import java.util.*;
 
 import com.d.passwordmanager.command.utils.AlertUtils;
 import com.d.passwordmanager.command.utils.ApplicationUtils;
-import com.d.passwordmanager.views.ShowCreatePasswordView;
+import com.d.passwordmanager.views.ShowCreatedPasswordView;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
@@ -15,6 +16,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.ObjectUtils;
 
 /**
@@ -66,9 +68,9 @@ public class CreatePasswordController {
 
     /* Spring */
 
-    private ShowCreatePasswordView showCreatePasswordView;
-    public void setShowCreatePasswordView(ShowCreatePasswordView showCreatePasswordView) {
-        this.showCreatePasswordView = showCreatePasswordView;
+    private ShowCreatedPasswordView showCreatedPasswordView;
+    public void setShowCreatePasswordView(ShowCreatedPasswordView showCreatedPasswordView) {
+        this.showCreatedPasswordView = showCreatedPasswordView;
     }
     /* Others */
 
@@ -149,6 +151,23 @@ public class CreatePasswordController {
     }
 
     /**
+     * 初始化面板样式
+     * @param flowPanes
+     */
+    public void initFlowPanelStyle(FlowPane... flowPanes) {
+        for (FlowPane flowPane : flowPanes) {
+            //设置节点水平摆放
+            flowPane.setOrientation(Orientation.HORIZONTAL);
+            //设置面板边缘内侧上、右、下、左空白的距离
+            flowPane.setPadding(new Insets(20, 20, 20, 20));
+            //设置面板上节点之间的水平距离为8像素
+            flowPane.setHgap(8);
+            //设置面板上节点之间的垂直距离为5像素
+            flowPane.setVgap(5);
+        }
+    }
+
+    /**
      * 真正的 使其添加到对应的 Panel 中
      *
      * @param flowPane 准备好的 Panel
@@ -169,34 +188,13 @@ public class CreatePasswordController {
     }
 
     /**
-     * 初始化面板样式
-     * @param flowPanes
-     */
-    public void initFlowPanelStyle(FlowPane... flowPanes) {
-        for (FlowPane flowPane : flowPanes) {
-            //设置节点水平摆放
-            flowPane.setOrientation(Orientation.HORIZONTAL);
-            //设置面板边缘内侧上、右、下、左空白的距离
-            flowPane.setPadding(new Insets(20, 20, 20, 20));
-            //设置面板上节点之间的水平距离为8像素
-            flowPane.setHgap(8);
-            //设置面板上节点之间的垂直距离为5像素
-            flowPane.setVgap(5);
-        }
-    }
-
-    /**
      * 选择/反选 所有数字，当 {@link #digitsCheckBox} 被选中时调用
      *
      * @param event 鼠标点击事件
      */
     @FXML
-    void selectAllDigits(MouseEvent event) {
-        if (((CheckBox) event.getSource()).isSelected()) {
-            digitsList.forEach(checkBox -> checkBox.setSelected(true));
-        } else {
-            digitsList.forEach(checkBox -> checkBox.setSelected(false));
-        }
+    private void selectAllDigits(MouseEvent event) {
+        selectAllItem(((CheckBox) event.getSource()).isSelected(), digitsList);
     }
 
     /**
@@ -205,12 +203,8 @@ public class CreatePasswordController {
      * @param event 鼠标点击事件
      */
     @FXML
-    void selectAllLowerCaseLetters(MouseEvent event) {
-        if (((CheckBox) event.getSource()).isSelected()) {
-            lowerCaseList.forEach(checkBox -> checkBox.setSelected(true));
-        } else {
-            lowerCaseList.forEach(checkBox -> checkBox.setSelected(false));
-        }
+    private void selectAllLowerCaseLetters(MouseEvent event) {
+        selectAllItem(((CheckBox) event.getSource()).isSelected(), lowerCaseList);
     }
 
     /**
@@ -219,12 +213,8 @@ public class CreatePasswordController {
      * @param event 鼠标点击事件
      */
     @FXML
-    void selectAllUpperCaseLetters(MouseEvent event) {
-        if (((CheckBox) event.getSource()).isSelected()) {
-            upperCaseList.forEach(checkBox -> checkBox.setSelected(true));
-        } else {
-            upperCaseList.forEach(checkBox -> checkBox.setSelected(false));
-        }
+    private void selectAllUpperCaseLetters(MouseEvent event) {
+        selectAllItem(((CheckBox) event.getSource()).isSelected(), upperCaseList);
     }
 
     /**
@@ -233,11 +223,21 @@ public class CreatePasswordController {
      * @param event 鼠标点击事件
      */
     @FXML
-    void selectAllSymbols(MouseEvent event) {
-        if (((CheckBox) event.getSource()).isSelected()) {
-            symbolsList.forEach(checkBox -> checkBox.setSelected(true));
+    private void selectAllSymbols(MouseEvent event) {
+        selectAllItem(((CheckBox) event.getSource()).isSelected(), symbolsList);
+    }
+
+    /**
+     * 选择 list 中的所有 checkbox
+     *
+     * @param condition 为 true 时选择全部
+     * @param checkBoxList 所有的 checkbox
+     */
+    private void selectAllItem(boolean condition, List<CheckBox> checkBoxList) {
+        if (condition) {
+            checkBoxList.forEach(checkBox -> checkBox.setSelected(true));
         } else {
-            symbolsList.forEach(checkBox -> checkBox.setSelected(false));
+            checkBoxList.forEach(checkBox -> checkBox.setSelected(false));
         }
     }
 
@@ -268,7 +268,7 @@ public class CreatePasswordController {
         }
 
         String password = RandomStringUtils.random(new Random().nextInt(maxLen - minLen + 1) + minLen, chs);
-        ApplicationUtils.startAndShow(showCreatePasswordView, password);
+        ApplicationUtils.startAndShow(showCreatedPasswordView, password);
     }
 
     /**

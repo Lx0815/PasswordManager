@@ -25,7 +25,6 @@ public class PasswordEncodeDecode {
      * @param pjp
      */
     public Object decode(ProceedingJoinPoint pjp) throws Throwable {
-        System.out.println("被代理方法执行了========================\n\n\n");
         Object result = pjp.proceed();
         if (result instanceof List) {
             ((List) result).forEach(param -> {
@@ -57,6 +56,13 @@ public class PasswordEncodeDecode {
         return pjp.proceed(args);
     }
 
+    /**
+     * 对密码进行强加密的通知
+     *
+     * @param pjp
+     * @return
+     * @throws Throwable
+     */
     public Object strengthEncode(ProceedingJoinPoint pjp) throws Throwable {
         Object[] args = pjp.getArgs();
         for (int i = 0; i < args.length; i++) {

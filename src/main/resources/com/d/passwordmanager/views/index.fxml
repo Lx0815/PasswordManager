@@ -10,8 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
-<BorderPane fx:id="indexPanel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="512.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.d.passwordmanager.controller.IndexController">
+<BorderPane fx:id="indexPanel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="512.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.d.passwordmanager.controller.IndexController">
     <bottom>
         <Pane prefHeight="34.0" prefWidth="600.0" BorderPane.alignment="CENTER">
             <children>
@@ -37,6 +36,16 @@
                         <Font size="14.0" />
                     </font>
                 </Button>
+            <Button layoutX="42.0" layoutY="217.0" mnemonicParsing="false" onMouseClicked="#importFromCSV" text="导入">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+            <Button layoutX="42.0" layoutY="280.0" mnemonicParsing="false" onMouseClicked="#exportFormCSV" text="导出">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
             </children>
         </Pane>
     </right>

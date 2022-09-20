@@ -1,5 +1,6 @@
 package com.d.passwordmanager.controller;
 
+import java.io.File;
 import java.net.URL;
 import java.util.*;
 
@@ -10,6 +11,7 @@ import com.d.passwordmanager.pojo.PasswordRecord;
 import com.d.passwordmanager.service.PasswordService;
 import com.d.passwordmanager.views.CreatePasswordView;
 import com.d.passwordmanager.views.EditPasswordView;
+import com.d.passwordmanager.views.IndexView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -19,6 +21,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.FileChooser;
 import org.springframework.util.ObjectUtils;
 
 import static com.d.passwordmanager.command.utils.PasswordUtils.*;
@@ -110,6 +113,11 @@ public class IndexController {
     private EditPasswordView editPasswordView;
     public void setEditPasswordView(EditPasswordView editPasswordView) {
         this.editPasswordView = editPasswordView;
+    }
+
+    private IndexView indexView;
+    public void setIndexView(IndexView indexView) {
+        this.indexView = indexView;
     }
 
     /* Others */
@@ -263,6 +271,33 @@ public class IndexController {
         passwordRecordList = passwordService.selectByKeyword(keyword);
         searchKeyword = keyword;
         refresh();
+    }
+
+    /**
+     * 导出密码为 CSV 格式
+     *
+     * @param event 鼠标事件
+     */
+    @FXML
+    void exportFormCSV(MouseEvent event) {
+
+    }
+
+    /**
+     * 从 CSV 格式的文件导入密码
+     *
+     * @param event 鼠标事件
+     */
+    @FXML
+    void importFromCSV(MouseEvent event) {
+        File file = indexView.doSelectFile();
+        boolean isSuccess = passwordService.importFromEdge(file);
+        if (isSuccess) {
+            refresh();
+            AlertUtils.alert(Alert.AlertType.INFORMATION, "密码导入成功");
+        } else {
+            AlertUtils.alert(Alert.AlertType.WARNING, "密码导入失败");
+        }
     }
 
     /**

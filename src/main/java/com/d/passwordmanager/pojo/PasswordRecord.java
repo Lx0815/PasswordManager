@@ -98,6 +98,7 @@ public class PasswordRecord {
 
     public CheckBox getSelected() {
         return selected;
+//        return null;
     }
 
     public void setSelected(CheckBox selected) {

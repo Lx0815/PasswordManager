@@ -2,6 +2,7 @@ package com.d.passwordmanager.service;
 
 import com.d.passwordmanager.pojo.PasswordRecord;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -24,4 +25,6 @@ public interface PasswordService {
     List<PasswordRecord> selectByKeyword(String keyword);
 
     void deleteAll();
+
+    boolean importFromEdge(File file);
 }

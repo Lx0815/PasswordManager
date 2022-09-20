@@ -80,7 +80,7 @@ public class RegisterController {
 
     /* Spring */
     private UserService userService;
-    public void setUserService(UserServiceImpl userService) {
+    public void setUserService(UserService userService) {
         this.userService = userService;
     }
 

@@ -1,13 +1,18 @@
 package com.d.passwordmanager.service.impl;
 
+import com.d.passwordmanager.command.csv.CsvUtils;
 import com.d.passwordmanager.command.utils.PasswordUtils;
 import com.d.passwordmanager.mapper.PasswordMapper;
 import com.d.passwordmanager.pojo.PasswordRecord;
 import com.d.passwordmanager.service.PasswordService;
 import org.springframework.util.ObjectUtils;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author: Ding
@@ -56,5 +61,31 @@ public class PasswordServiceImpl implements PasswordService {
     @Override
     public boolean insertOne(PasswordRecord passwordRecord) {
         return passwordMapper.insertOne(passwordRecord) == 1;
+    }
+
+    @Override
+    public boolean importFromEdge(File file) {
+        try {
+            List<PasswordRecord> passwordRecordList = CsvUtils.readAll(PasswordRecord.class,
+                                                                            Map.of("name", "domainName",
+                                                                                    "url", "description",
+                                                                                    "username", "account",
+                                                                                    "password", "password"),
+                                                                            file.toPath());
+
+            passwordRecordList.forEach(it -> {
+                // 设置密码强度
+                it.setPasswordStrength(PasswordUtils.calculatePasswordStrength(it.getPassword()));
+                // 加密密码
+                it.setPassword(PasswordUtils.encode(it.getPassword()));
+            });
+
+            if (ObjectUtils.isEmpty(passwordRecordList)) return true;
+            Integer count = passwordMapper.insertByList(passwordRecordList);
+
+            return ObjectUtils.nullSafeEquals(count, passwordRecordList.size());
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

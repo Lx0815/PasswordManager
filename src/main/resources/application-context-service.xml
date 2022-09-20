@@ -6,7 +6,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
                            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
-    <import resource="application-context-mybatis.xml"/>
+<!--    <import resource="application-context-mybatis.xml"/>-->
 
     <bean id="userService" class="com.d.passwordmanager.service.impl.UserServiceImpl">
         <property name="userMapper" ref="userMapper"/>
@@ -23,11 +23,14 @@
     <aop:config>
         <!-- 配置切入点 -->
         <aop:pointcut id="encode" expression="execution(* com.d.passwordmanager.service.impl.PasswordServiceImpl.insertOne(..))
-                                                or execution(* com.d.passwordmanager.service.impl.PasswordServiceImpl.updateByPasswordRecord(..))"/>
+                                                or execution(* com.d.passwordmanager.service.impl.PasswordServiceImpl.updateByPasswordRecord(..))
+                                                or execution(* com.d.passwordmanager.service.impl.PasswordServiceImpl.importFromEdge(..)))"/>
+
         <aop:pointcut id="decode" expression="execution(* com.d.passwordmanager.service.impl.PasswordServiceImpl.selectByKeyword(..))"/>
-        <aop:pointcut id="strengthEncode" expression="execution(* com.d.passwordmanager.service.impl.UserServiceImpl.register(..))
-                                                or execution(* com.d.passwordmanager.service.impl.UserServiceImpl.login(..))
-                                                or execution(* com.d.passwordmanager.service.impl.UserServiceImpl.updatePassword(..))"/>
+
+        <aop:pointcut id="strengthEncode" expression="execution(* com.d.passwordmanager.service.UserService.register(..))
+                                                or execution(* com.d.passwordmanager.service.UserService.login(..))
+                                                or execution(* com.d.passwordmanager.service.UserService.updatePassword(..))"/>
 
         <!-- 配置切面 -->
         <aop:aspect ref="passwordEncodeDecode">

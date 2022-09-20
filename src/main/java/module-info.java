@@ -21,6 +21,7 @@ module com.d.passwordmanager {
     requires org.apache.commons.lang3;
     requires org.kordamp.bootstrapfx.core;
     requires org.apache.commons.codec;
+    requires org.apache.commons.text;
 
     requires spring.aop;
     requires spring.beans;
@@ -52,4 +53,5 @@ module com.d.passwordmanager {
     opens com.d.passwordmanager.mapper to spring.core, spring.context, spring.test, spring.jdbc, spring.beans;
     exports com.d.passwordmanager;
     opens com.d.passwordmanager to javafx.fxml;
+    exports com.d.passwordmanager.command.csv;
 }

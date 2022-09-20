@@ -1,13 +1,11 @@
 package com.d.passwordmanager.service.impl;
 
-import com.d.passwordmanager.command.utils.PasswordUtils;
 import com.d.passwordmanager.mapper.UserMapper;
 import com.d.passwordmanager.pojo.User;
 import com.d.passwordmanager.service.UserService;
 import org.springframework.util.ObjectUtils;
 
 import java.util.List;
-import java.util.Objects;
 
 /**
  * @author: Ding

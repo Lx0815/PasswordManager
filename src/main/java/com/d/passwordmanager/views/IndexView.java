@@ -5,8 +5,10 @@ import com.d.passwordmanager.controller.IndexController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 
 public class IndexView extends BaseView {
@@ -14,6 +16,9 @@ public class IndexView extends BaseView {
     private Stage stage;
 
     private IndexController indexController;
+    public void setIndexController(IndexController indexController) {
+        this.indexController = indexController;
+    }
 
     public static void main(String[] args) {
         launch(args);
@@ -38,8 +43,12 @@ public class IndexView extends BaseView {
         stage.close();
     }
 
-    public void setIndexController(IndexController indexController) {
-        this.indexController = indexController;
+    public File doSelectFile() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("选择文件");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("CSV Files", "*.csv")
+        );
+        return fileChooser.showOpenDialog(stage);
     }
-
 }

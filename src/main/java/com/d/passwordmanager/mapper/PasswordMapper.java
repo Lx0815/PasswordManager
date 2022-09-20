@@ -25,4 +25,6 @@ public interface PasswordMapper {
     List<PasswordRecord> selectByKeyword(@Param("keyword") String keyword);
 
     void deleteAll();
+
+    Integer insertByList(@Param("list") List<PasswordRecord> list);
 }

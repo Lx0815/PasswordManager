@@ -201,16 +201,6 @@ public class IndexController {
     }
 
     /**
-     * 打开编辑密码界面
-     *
-     * @param event 鼠标事件
-     */
-    @FXML
-    private void toEditView(TableColumn.CellEditEvent<PasswordRecord, String> event) {
-        ApplicationUtils.startAndShow(editPasswordView, event.getRowValue());
-    }
-
-    /**
      * 删除选择的密码，当 删除按钮 被点击时调用
      *
      * @param mouseEvent 鼠标事件

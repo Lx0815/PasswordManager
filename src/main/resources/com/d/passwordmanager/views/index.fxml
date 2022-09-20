@@ -64,10 +64,10 @@
                 <TableView fx:id="contentTableView" layoutX="21.0" layoutY="58.0" prefHeight="376.0" prefWidth="880.0">
                     <columns>
                         <TableColumn fx:id="checkboxColumn" prefWidth="146" text="全选" />
-                        <TableColumn fx:id="domainNameColumn" onEditStart="#toEditView" prefWidth="146" text="域名" />
-                        <TableColumn fx:id="descriptionColumn" onEditStart="#toEditView" prefWidth="146" text="描述" />
-                        <TableColumn fx:id="accountColumn" onEditStart="#toEditView" prefWidth="146" text="账号" />
-                        <TableColumn fx:id="passwordColumn" onEditStart="#toEditView" prefWidth="146" text="密码" />
+                        <TableColumn fx:id="domainNameColumn" prefWidth="146" text="域名" />
+                        <TableColumn fx:id="descriptionColumn" prefWidth="146" text="描述" />
+                        <TableColumn fx:id="accountColumn" prefWidth="146" text="账号" />
+                        <TableColumn fx:id="passwordColumn" prefWidth="146" text="密码" />
                         <TableColumn fx:id="passwordStrengthColumn" prefWidth="146" text="密码强度" />
                     </columns>
                 </TableView>

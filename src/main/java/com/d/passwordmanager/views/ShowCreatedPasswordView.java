@@ -1,7 +1,7 @@
 package com.d.passwordmanager.views;
 
 import com.d.passwordmanager.command.utils.ApplicationUtils;
-import com.d.passwordmanager.controller.ShowCreatePasswordController;
+import com.d.passwordmanager.controller.ShowCreatedPasswordController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -9,15 +9,15 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class ShowCreatePasswordView extends BaseView {
+public class ShowCreatedPasswordView extends BaseView {
 
     private Stage stage;
 
     private String password;
 
-    private ShowCreatePasswordController showCreatePasswordController;
-    public void setShowCreatePasswordController(ShowCreatePasswordController showCreatePasswordController) {
-        this.showCreatePasswordController = showCreatePasswordController;
+    private ShowCreatedPasswordController showCreatedPasswordController;
+    public void setShowCreatedPasswordController(ShowCreatedPasswordController showCreatedPasswordController) {
+        this.showCreatedPasswordController = showCreatedPasswordController;
     }
 
     public static void main(String[] args) {
@@ -33,11 +33,11 @@ public class ShowCreatePasswordView extends BaseView {
     @Override
     public void start(Stage stage) throws IOException {
         this.stage = stage;
-        FXMLLoader fxmlLoader = ApplicationUtils.load("showCreatePassword.fxml");
+        FXMLLoader fxmlLoader = ApplicationUtils.load("showCreatedPassword.fxml");
         Parent parent = fxmlLoader.load();
         Scene scene = new Scene(parent);
         stage.setTitle("密码生成器");
-        showCreatePasswordController.initView(password);
+        showCreatedPasswordController.initView(password);
         stage.setScene(scene);
         stage.show();
     }

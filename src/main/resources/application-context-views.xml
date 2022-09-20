@@ -19,8 +19,8 @@
         <property name="editPasswordController" ref="editPasswordController"/>
     </bean>
 
-    <bean id="showCreatePasswordView" class="com.d.passwordmanager.views.ShowCreatePasswordView">
-        <property name="showCreatePasswordController" ref="showCreatePasswordController"/>
+    <bean id="showCreatedPasswordView" class="com.d.passwordmanager.views.ShowCreatedPasswordView">
+        <property name="showCreatedPasswordController" ref="showCreatedPasswordController"/>
     </bean>
 
     <bean id="findPasswordView" class="com.d.passwordmanager.views.FindPasswordView">

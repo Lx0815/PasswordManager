@@ -29,7 +29,7 @@
     </bean>
 
     <bean id="createPasswordController" class="com.d.passwordmanager.controller.CreatePasswordController">
-        <property name="showCreatePasswordView" ref="showCreatePasswordView"/>
+        <property name="showCreatePasswordView" ref="showCreatedPasswordView"/>
     </bean>
 
     <bean id="editPasswordController" class="com.d.passwordmanager.controller.EditPasswordController">
@@ -38,7 +38,7 @@
         <property name="indexController" ref="indexController"/>
     </bean>
 
-    <bean id="showCreatePasswordController" class="com.d.passwordmanager.controller.ShowCreatePasswordController"/>
+    <bean id="showCreatedPasswordController" class="com.d.passwordmanager.controller.ShowCreatedPasswordController"/>
 
     <bean id="findPasswordController" class="com.d.passwordmanager.controller.FindPasswordController">
         <property name="userService" ref="userService"/>

@@ -22,6 +22,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import org.springframework.util.ObjectUtils;
 
@@ -96,6 +97,9 @@ public class IndexController {
 
     @FXML // fx:id="totalPasswordTipsLabel"
     private Label totalPasswordTipsLabel; // Value injected by FXMLLoader
+
+    @FXML // fx:id="tablePanel"
+    private Pane tablePanel; // Value injected by FXMLLoader
 
 
     /* Spring */
@@ -211,6 +215,9 @@ public class IndexController {
                 ApplicationUtils.startAndShow(editPasswordView, selectedItem);
             }
         });
+
+//        contentTableView.prefWidthProperty().bind(tablePanel.widthProperty());
+
         contentTableView.setItems(FXCollections.observableList(passwordRecordList));
     }
 
@@ -287,7 +294,7 @@ public class IndexController {
     @FXML
     void exportFormCSV(MouseEvent event) throws FileNotFoundException {
         File file = indexView.showSaveWindow();
-
+        if (ObjectUtils.isEmpty(file)) return;
         try {
             if (! file.exists() && ! file.createNewFile())
                 AlertUtils.alert(Alert.AlertType.WARNING, "导出失败，请重新选择位置");

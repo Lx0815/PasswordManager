@@ -74,21 +74,21 @@ public class PasswordUtils {
      *
      * @param domainNameTextField 域名字段输入框
      * @param descriptionTextField 描述字段输入框
-     * @param accountTextField 账户字段输入框
+     * @param usernameTextField 账户字段输入框
      * @param passwordTextField 面膜字段输入框
      * @return 返回用户输入的 {@link PasswordRecord} 对象，若返回 NULL 则表示用户还有字段未输入
      */
     public static PasswordRecord getPasswordRecordByTextFields(TextField domainNameTextField,
                                                                TextField descriptionTextField,
-                                                               TextField accountTextField,
+                                                               TextField usernameTextField,
                                                                TextField passwordTextField) {
         String domainName = domainNameTextField.getText();
         String description = descriptionTextField.getText();
-        String account = accountTextField.getText();
+        String username = usernameTextField.getText();
         String password = passwordTextField.getText();
 
         if (ObjectUtils.isEmpty(domainName) || ObjectUtils.isEmpty(description)
-                || ObjectUtils.isEmpty(account) || ObjectUtils.isEmpty(password)) {
+                || ObjectUtils.isEmpty(username) || ObjectUtils.isEmpty(password)) {
 
             AlertUtils.alert(Alert.AlertType.WARNING, "请完善相关信息");
             return null;
@@ -99,7 +99,7 @@ public class PasswordUtils {
 
         PasswordStrength passwordStrength = calculatePasswordStrength(password);
 
-        return new PasswordRecord(domainName, description, account, password, passwordStrength);
+        return new PasswordRecord(domainName, description, username, password, passwordStrength);
     }
 
     /**
@@ -161,8 +161,8 @@ public class PasswordUtils {
         if (ObjectUtils.nullSafeEquals(newPasswordRecord.getPassword(), oldPasswordRecord.getPassword())) {
             newPasswordRecord.setPassword(null);
         }
-        if (ObjectUtils.nullSafeEquals(newPasswordRecord.getAccount(), oldPasswordRecord.getAccount())) {
-            newPasswordRecord.setAccount(null);
+        if (ObjectUtils.nullSafeEquals(newPasswordRecord.getUsername(), oldPasswordRecord.getUsername())) {
+            newPasswordRecord.setUsername(null);
         }
     }
 

@@ -16,16 +16,20 @@ import java.io.IOException;
 
 public abstract class BaseView extends Application implements View {
 
+    protected Stage stage;
+
     @Override
     public void start(Stage stage, Object[] params) throws IOException {
-
+        start(stage);
     }
 
     @Override
     public void start(Stage stage) throws IOException {
-        throw new RuntimeException("BaseView 子类未重写 start 方法");
+        this.stage = stage;
     }
 
     @Override
-    public abstract void close();
+    public void close() {
+        stage.close();
+    }
 }

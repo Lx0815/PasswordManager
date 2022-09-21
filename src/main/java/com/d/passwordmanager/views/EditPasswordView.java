@@ -15,8 +15,6 @@ import java.util.Objects;
 
 public class EditPasswordView extends BaseView {
 
-    private Stage stage;
-
     private EditPasswordController editPasswordController;
     public void setEditPasswordController(EditPasswordController editPasswordController) {
         this.editPasswordController = editPasswordController;
@@ -38,18 +36,12 @@ public class EditPasswordView extends BaseView {
 
     @Override
     public void start(Stage stage) throws IOException {
-        this.stage = stage;
-
+        super.start(stage);
         FXMLLoader fxmlLoader = ApplicationUtils.load("editPassword.fxml");
         Parent parent = fxmlLoader.load();
         Scene scene = new Scene(parent);
         stage.setTitle("编辑");
         stage.setScene(scene);
         stage.show();
-    }
-
-    @Override
-    public void close() {
-        stage.close();
     }
 }

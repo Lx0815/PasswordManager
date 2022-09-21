@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configs [
+        <!--
+            语法：<!ELEMENT 声明元素标签名 (子标签名)*>
+                *:表示可以存在多个子标签，反之。
+
+            语法：<!ATTLIST 声明元素标签名
+                        属性一 CDATA #REQUIRED
+                        属性二 CDATA #REQUIRED>
+                #REQUIRED：表示必须存在该属性
+
+        -->
+        <!ELEMENT configs (config)*>
+
+        <!ELEMENT config (domainName,description,username,password)>
+        <!ATTLIST config
+                id CDATA #REQUIRED>
+
+        <!ELEMENT domainName (#PCDATA)>
+        <!ATTLIST domainName
+                value CDATA #REQUIRED>
+
+        <!ELEMENT description (#PCDATA)>
+        <!ATTLIST description
+                value CDATA #REQUIRED>
+
+        <!ELEMENT username (#PCDATA)>
+        <!ATTLIST username
+                value CDATA #REQUIRED>
+
+        <!ELEMENT password (#PCDATA)>
+        <!ATTLIST password
+                value CDATA #REQUIRED>
+]>
+
+
+<configs>
+    <config id="edge">
+        <domainName value="name"/>
+        <description value="url"/>
+        <username value="username"/>
+        <password value="password"/>
+    </config>
+
+    <config id="chrome">
+        <domainName value="name"/>
+        <description value="url"/>
+        <username value="username"/>
+        <password value="password"/>
+    </config>
+
+    <config id="firefox">
+        <domainName value="formActionOrigin"/>
+        <description value="url"/>
+        <username value="username"/>
+        <password value="password"/>
+    </config>
+</configs>
+

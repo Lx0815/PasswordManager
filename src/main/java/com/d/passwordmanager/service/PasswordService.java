@@ -4,6 +4,7 @@ import com.d.passwordmanager.pojo.PasswordRecord;
 
 import java.io.File;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author: Ding
@@ -26,5 +27,5 @@ public interface PasswordService {
 
     void deleteAll();
 
-    boolean importFromEdge(File file);
+    boolean importFromEdge(File file, Map<String, String> mapperMap);
 }

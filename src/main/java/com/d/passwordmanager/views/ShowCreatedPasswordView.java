@@ -11,8 +11,6 @@ import java.io.IOException;
 
 public class ShowCreatedPasswordView extends BaseView {
 
-    private Stage stage;
-
     private String password;
 
     private ShowCreatedPasswordController showCreatedPasswordController;
@@ -32,7 +30,7 @@ public class ShowCreatedPasswordView extends BaseView {
 
     @Override
     public void start(Stage stage) throws IOException {
-        this.stage = stage;
+        super.start(stage);
         FXMLLoader fxmlLoader = ApplicationUtils.load("showCreatedPassword.fxml");
         Parent parent = fxmlLoader.load();
         Scene scene = new Scene(parent);
@@ -40,10 +38,5 @@ public class ShowCreatedPasswordView extends BaseView {
         showCreatedPasswordController.initView(password);
         stage.setScene(scene);
         stage.show();
-    }
-
-    @Override
-    public void close() {
-        stage.close();
     }
 }

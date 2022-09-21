@@ -75,7 +75,7 @@
                         <TableColumn fx:id="checkboxColumn" prefWidth="146" text="全选" />
                         <TableColumn fx:id="domainNameColumn" prefWidth="146" text="域名" />
                         <TableColumn fx:id="descriptionColumn" prefWidth="146" text="描述" />
-                        <TableColumn fx:id="accountColumn" prefWidth="146" text="账号" />
+                        <TableColumn fx:id="usernameColumn" prefWidth="146" text="账号" />
                         <TableColumn fx:id="passwordColumn" prefWidth="146" text="密码" />
                         <TableColumn fx:id="passwordStrengthColumn" prefWidth="146" text="密码强度" />
                     </columns>
@@ -95,7 +95,7 @@
                         </Label>
                         <TextField fx:id="descriptionTextField" layoutX="272.0" layoutY="16.0" />
                         <Label layoutX="451.0" layoutY="20.0" text="账号：" />
-                        <TextField fx:id="accountTextField" layoutX="487.0" layoutY="16.0" />
+                        <TextField fx:id="usernameTextField" layoutX="487.0" layoutY="16.0" />
                         <Label layoutX="663.0" layoutY="20.0" text="密码：" />
                         <PasswordField fx:id="passwordTextField" layoutX="699.0" layoutY="16.0" />
                     </children>

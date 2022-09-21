@@ -8,7 +8,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class RegisterView extends BaseView {
+public class ImportPasswordView extends BaseView {
+
 
     public static void main(String[] args) {
         launch(args);
@@ -17,10 +18,10 @@ public class RegisterView extends BaseView {
     @Override
     public void start(Stage stage) throws IOException {
         super.start(stage);
-        FXMLLoader fxmlLoader = ApplicationUtils.load("register.fxml");
+        FXMLLoader fxmlLoader = ApplicationUtils.load("importPassword.fxml");
         Parent parent = fxmlLoader.load();
         Scene scene = new Scene(parent);
-        stage.setTitle("注册");
+        stage.setTitle("导入密码");
         stage.setScene(scene);
         stage.show();
     }

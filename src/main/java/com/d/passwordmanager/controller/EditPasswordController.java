@@ -33,8 +33,8 @@ public class EditPasswordController {
     @FXML // URL location of the FXML file that was given to the FXMLLoader
     private URL location;
 
-    @FXML // fx:id="accountTextField"
-    private TextField accountTextField; // Value injected by FXMLLoader
+    @FXML // fx:id="usernameTextField"
+    private TextField usernameTextField; // Value injected by FXMLLoader
 
     @FXML // fx:id="commitEditButton"
     private Button commitEditButton; // Value injected by FXMLLoader
@@ -101,7 +101,7 @@ public class EditPasswordController {
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
-        assert accountTextField != null : "fx:id=\"accountTextField\" was not injected: check your FXML file 'editPassword.fxml'.";
+        assert usernameTextField != null : "fx:id=\"usernameTextField\" was not injected: check your FXML file 'editPassword.fxml'.";
         assert commitEditButton != null : "fx:id=\"commitEditButton\" was not injected: check your FXML file 'editPassword.fxml'.";
         assert descriptionTextField != null : "fx:id=\"descriptionTextField\" was not injected: check your FXML file 'editPassword.fxml'.";
         assert domainNameTextField != null : "fx:id=\"domainNameTextField\" was not injected: check your FXML file 'editPassword.fxml'.";
@@ -126,7 +126,7 @@ public class EditPasswordController {
         // 初始化填充上用户选择的密码记录的相关信息
         domainNameTextField.setText(oldPasswordRecord.getDomainName());
         descriptionTextField.setText(oldPasswordRecord.getDescription());
-        accountTextField.setText(oldPasswordRecord.getAccount());
+        usernameTextField.setText(oldPasswordRecord.getUsername());
         passwordTextField.setText(oldPasswordRecord.getPassword());
         passwordTips.setText("当前密码强度为：" + oldPasswordRecord.getPasswordStrength().name());
 
@@ -139,7 +139,7 @@ public class EditPasswordController {
      */
     private PasswordRecord getNewPasswordRecord() {
 
-        PasswordRecord passwordRecord = getPasswordRecordByTextFields(domainNameTextField, descriptionTextField, accountTextField, passwordTextField);
+        PasswordRecord passwordRecord = getPasswordRecordByTextFields(domainNameTextField, descriptionTextField, usernameTextField, passwordTextField);
         // 此断言不应该有效
         Assert.notNull(passwordRecord, "无法获取密码对象");
 

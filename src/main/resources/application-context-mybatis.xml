@@ -44,7 +44,7 @@
         创建 UserMapper 接口的代理对象,创建单个代理对象
     -->
 <!--    <bean id="userMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">-->
-<!--&lt;!&ndash;        注入IAccountDao接口&ndash;&gt;-->
+<!--&lt;!&ndash;        注入IusernameDao接口&ndash;&gt;-->
 <!--        <property name="mapperInterface" value="com.d.passwordmanager.mapper.UserMapper"/>-->
 <!--&lt;!&ndash;        注入sqlSessionFactory工厂对象&ndash;&gt;-->
 <!--        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>-->

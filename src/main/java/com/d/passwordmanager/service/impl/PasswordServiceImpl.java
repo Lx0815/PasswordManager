@@ -64,13 +64,10 @@ public class PasswordServiceImpl implements PasswordService {
     }
 
     @Override
-    public boolean importFromEdge(File file) {
+    public boolean importFromEdge(File file, Map<String, String> mapperMap) {
         try {
             List<PasswordRecord> passwordRecordList = CsvUtils.readAll(PasswordRecord.class,
-                                                                            Map.of("name", "domainName",
-                                                                                    "url", "description",
-                                                                                    "username", "account",
-                                                                                    "password", "password"),
+                                                                            mapperMap,
                                                                             file.toPath());
 
             passwordRecordList.forEach(it -> {

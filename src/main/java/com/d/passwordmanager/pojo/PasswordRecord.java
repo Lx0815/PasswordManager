@@ -21,7 +21,7 @@ public class PasswordRecord {
 
     private String description;
 
-    private String account;
+    private String username;
 
     private String password;
 
@@ -35,17 +35,17 @@ public class PasswordRecord {
 
     public PasswordRecord() {}
 
-    public PasswordRecord(Integer id, String domainName, String description, String account, String password, PasswordStrength passwordStrength) {
+    public PasswordRecord(Integer id, String domainName, String description, String username, String password, PasswordStrength passwordStrength) {
         this.id = id;
         this.domainName = domainName;
         this.description = description;
-        this.account = account;
+        this.username = username;
         this.password = password;
         this.passwordStrength = passwordStrength;
     }
 
-    public PasswordRecord(String domainName, String description, String account, String password, PasswordStrength passwordStrength) {
-        this(null, domainName, description, account, password, passwordStrength);
+    public PasswordRecord(String domainName, String description, String username, String password, PasswordStrength passwordStrength) {
+        this(null, domainName, description, username, password, passwordStrength);
     }
 
     public Integer getId() {
@@ -72,12 +72,12 @@ public class PasswordRecord {
         this.description = description;
     }
 
-    public String getAccount() {
-        return account;
+    public String getUsername() {
+        return username;
     }
 
-    public void setAccount(String account) {
-        this.account = account;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {

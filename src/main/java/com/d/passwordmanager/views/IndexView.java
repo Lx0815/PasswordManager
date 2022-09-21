@@ -13,8 +13,6 @@ import java.io.IOException;
 
 public class IndexView extends BaseView {
 
-    private Stage stage;
-
     private IndexController indexController;
     public void setIndexController(IndexController indexController) {
         this.indexController = indexController;
@@ -26,7 +24,7 @@ public class IndexView extends BaseView {
 
     @Override
     public void start(Stage stage) throws IOException {
-        this.stage = stage;
+        super.start(stage);
         FXMLLoader fxmlLoader = ApplicationUtils.load("index.fxml");
         Parent parent = fxmlLoader.load();
         Scene scene = new Scene(parent);
@@ -39,10 +37,11 @@ public class IndexView extends BaseView {
     }
 
 
-    public void close() {
-        stage.close();
-    }
-
+    /**
+     * 去到选择文件界面
+     *
+     * @return
+     */
     public File doSelectFile() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("选择文件");

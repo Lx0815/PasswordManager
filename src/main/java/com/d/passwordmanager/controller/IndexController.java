@@ -11,6 +11,7 @@ import com.d.passwordmanager.pojo.PasswordRecord;
 import com.d.passwordmanager.service.PasswordService;
 import com.d.passwordmanager.views.CreatePasswordView;
 import com.d.passwordmanager.views.EditPasswordView;
+import com.d.passwordmanager.views.ImportPasswordView;
 import com.d.passwordmanager.views.IndexView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -57,8 +58,8 @@ public class IndexController {
     @FXML // fx:id="descriptionColumn"
     private TableColumn<PasswordRecord, String> descriptionColumn; // Value injected by FXMLLoader
 
-    @FXML // fx:id="account"
-    private TableColumn<PasswordRecord, String> accountColumn; // Value injected by FXMLLoader
+    @FXML // fx:id="username"
+    private TableColumn<PasswordRecord, String> usernameColumn; // Value injected by FXMLLoader
 
     @FXML // fx:id="passwordColumn"
     private TableColumn<PasswordRecord, String> passwordColumn; // Value injected by FXMLLoader
@@ -75,8 +76,8 @@ public class IndexController {
     @FXML // fx:id="domainNameTextField"
     private TextField domainNameTextField; // Value injected by FXMLLoader
 
-    @FXML // fx:id="accountTextField"
-    private TextField accountTextField; // Value injected by FXMLLoader
+    @FXML // fx:id="usernameTextField"
+    private TextField usernameTextField; // Value injected by FXMLLoader
 
     @FXML // fx:id="passwordTextField"
     private PasswordField passwordTextField; // Value injected by FXMLLoader
@@ -115,9 +116,9 @@ public class IndexController {
         this.editPasswordView = editPasswordView;
     }
 
-    private IndexView indexView;
-    public void setIndexView(IndexView indexView) {
-        this.indexView = indexView;
+    private ImportPasswordView importPasswordView;
+    public void setImportPasswordView(ImportPasswordView importPasswordView) {
+        this.importPasswordView = importPasswordView;
     }
 
     /* Others */
@@ -175,7 +176,7 @@ public class IndexController {
         checkboxColumn.setCellValueFactory(new PropertyValueFactory<>("selected"));
         domainNameColumn.setCellValueFactory(new PropertyValueFactory<>("domainName"));
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
-        accountColumn.setCellValueFactory(new PropertyValueFactory<>("account"));
+        usernameColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
         passwordColumn.setCellValueFactory(new PropertyValueFactory<>("passwordEcho"));
         passwordStrengthColumn.setCellValueFactory(new PropertyValueFactory<>("passwordStrength"));
 
@@ -193,7 +194,7 @@ public class IndexController {
         });
         domainNameColumn.setComparator((Comparator.naturalOrder()));
         descriptionColumn.setComparator(Comparator.naturalOrder());
-        accountColumn.setComparator(Comparator.naturalOrder());
+        usernameColumn.setComparator(Comparator.naturalOrder());
         passwordStrengthColumn.setComparator(Comparator.naturalOrder());
 
         // 设置点击事件
@@ -245,7 +246,7 @@ public class IndexController {
     @FXML
     void addOnePasswordRecord(MouseEvent event) {
         PasswordRecord passwordRecord = getPasswordRecordByTextFields(
-                domainNameTextField, descriptionTextField, accountTextField, passwordTextField
+                domainNameTextField, descriptionTextField, usernameTextField, passwordTextField
         );
         if (ObjectUtils.isEmpty(passwordRecord)) return;
 
@@ -290,14 +291,7 @@ public class IndexController {
      */
     @FXML
     void importFromCSV(MouseEvent event) {
-        File file = indexView.doSelectFile();
-        boolean isSuccess = passwordService.importFromEdge(file);
-        if (isSuccess) {
-            refresh();
-            AlertUtils.alert(Alert.AlertType.INFORMATION, "密码导入成功");
-        } else {
-            AlertUtils.alert(Alert.AlertType.WARNING, "密码导入失败");
-        }
+        ApplicationUtils.startAndShow(importPasswordView);
     }
 
     /**
@@ -338,7 +332,7 @@ public class IndexController {
     private void removeRecordFromTextField() {
         domainNameTextField.setText(null);
         descriptionTextField.setText(null);
-        accountTextField.setText(null);
+        usernameTextField.setText(null);
         passwordTextField.setText(null);
     }
 
@@ -356,7 +350,6 @@ public class IndexController {
     public void refresh(boolean flag) {
         if (flag) {
             initView();
-//            contentTableView.refresh();
         }
     }
 }

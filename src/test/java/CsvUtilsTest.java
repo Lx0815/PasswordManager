@@ -23,7 +23,7 @@ public class CsvUtilsTest {
                 PasswordRecord.class,
                 Map.of("name", "description",
                         "url", "domainName",
-                        "username", "account",
+                        "username", "username",
                         "password", "password"),
                 Paths.get("C:\\Users\\15074\\Desktop\\more\\Microsoft Edge 密码.csv"));
         System.out.println(recordList);

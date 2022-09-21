@@ -7,8 +7,8 @@ import com.d.passwordmanager.pojo.PasswordRecord;
 import com.d.passwordmanager.service.PasswordService;
 import org.springframework.util.ObjectUtils;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.List;
@@ -82,6 +82,31 @@ public class PasswordServiceImpl implements PasswordService {
 
             return ObjectUtils.nullSafeEquals(count, passwordRecordList.size());
         } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public boolean savaToFile(File file, PasswordService passwordService) {
+        try (OutputStream outputStream = new FileOutputStream(file)) {
+            // 通过 passwordService 被增强后的类去调用方法，以获取到解密之后的密码
+            List<PasswordRecord> list = passwordService.selectByKeyword(null);
+            StringBuilder sb = new StringBuilder("name,url,username,password\n");
+            list.forEach(it -> {
+                sb.append(it.getDomainName())
+                        .append(',')
+                        .append(it.getDescription())
+                        .append(',')
+                        .append(it.getUsername())
+                        .append(',')
+                        .append(it.getPassword())
+                        .append('\n');
+            });
+
+            outputStream.write(sb.toString().getBytes(StandardCharsets.UTF_8));
+            outputStream.flush();
+            return true;
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }

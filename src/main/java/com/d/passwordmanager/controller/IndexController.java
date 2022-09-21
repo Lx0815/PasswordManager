@@ -1,6 +1,6 @@
 package com.d.passwordmanager.controller;
 
-import java.io.File;
+import java.io.*;
 import java.net.URL;
 import java.util.*;
 
@@ -119,6 +119,11 @@ public class IndexController {
     private ImportPasswordView importPasswordView;
     public void setImportPasswordView(ImportPasswordView importPasswordView) {
         this.importPasswordView = importPasswordView;
+    }
+
+    private IndexView indexView;
+    public void setIndexView(IndexView indexView) {
+        this.indexView = indexView;
     }
 
     /* Others */
@@ -280,8 +285,21 @@ public class IndexController {
      * @param event 鼠标事件
      */
     @FXML
-    void exportFormCSV(MouseEvent event) {
+    void exportFormCSV(MouseEvent event) throws FileNotFoundException {
+        File file = indexView.showSaveWindow();
 
+        try {
+            if (! file.exists() && ! file.createNewFile())
+                AlertUtils.alert(Alert.AlertType.WARNING, "导出失败，请重新选择位置");
+            boolean isSuccess = passwordService.savaToFile(file, passwordService);
+            if (isSuccess) {
+                AlertUtils.alert(Alert.AlertType.INFORMATION, "导出成功");
+            } else {
+                AlertUtils.alert(Alert.AlertType.WARNING, "导出失败");
+            }
+        } catch (IOException e) {
+            AlertUtils.alert(Alert.AlertType.WARNING, "导出失败，请重新选择位置");
+        }
     }
 
     /**

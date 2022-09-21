@@ -36,18 +36,13 @@ public class IndexView extends BaseView {
         stage.show();
     }
 
-
-    /**
-     * 去到选择文件界面
-     *
-     * @return
-     */
-    public File doSelectFile() {
+    public File showSaveWindow() {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("选择文件");
+        fileChooser.setTitle("导出");
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("CSV Files", "*.csv")
         );
-        return fileChooser.showOpenDialog(stage);
+        fileChooser.initialFileNameProperty().set("password.csv");
+        return fileChooser.showSaveDialog(stage);
     }
 }

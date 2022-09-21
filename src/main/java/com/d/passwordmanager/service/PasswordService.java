@@ -28,4 +28,6 @@ public interface PasswordService {
     void deleteAll();
 
     boolean importFromEdge(File file, Map<String, String> mapperMap);
+
+    boolean savaToFile(File file, PasswordService passwordService);
 }

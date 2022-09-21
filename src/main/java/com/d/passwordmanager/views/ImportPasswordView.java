@@ -4,8 +4,10 @@ import com.d.passwordmanager.command.utils.ApplicationUtils;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 
 public class ImportPasswordView extends BaseView {
@@ -24,5 +26,19 @@ public class ImportPasswordView extends BaseView {
         stage.setTitle("导入密码");
         stage.setScene(scene);
         stage.show();
+    }
+
+    /**
+     * 去到选择文件界面
+     *
+     * @return
+     */
+    public File doSelectFile() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("选择文件");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("CSV Files", "*.csv")
+        );
+        return fileChooser.showOpenDialog(stage);
     }
 }

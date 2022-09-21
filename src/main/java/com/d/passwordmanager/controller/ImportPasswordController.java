@@ -63,10 +63,6 @@ public class ImportPasswordController {
 
 
     /* Spring */
-    private IndexView indexView;
-    public void setIndexView(IndexView indexView) {
-        this.indexView = indexView;
-    }
 
     private ImportPasswordView importPasswordView;
     public void setImportPasswordView(ImportPasswordView importPasswordView) {
@@ -184,7 +180,7 @@ public class ImportPasswordController {
      * @param mapperMap csv 文件标题行与 {@link com.d.passwordmanager.pojo.PasswordRecord} 的字段的映射关系
      */
     private void doSelect(Map<String, String> mapperMap) {
-        File file = indexView.doSelectFile();
+        File file = importPasswordView.doSelectFile();
         mapperMap = reserveKeyValue(mapperMap);
         boolean isSuccess = passwordService.importFromEdge(file, mapperMap);
         if (isSuccess) {

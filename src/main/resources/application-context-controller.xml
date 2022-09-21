@@ -23,6 +23,7 @@
         <property name="createPasswordView" ref="createPasswordView"/>
         <property name="editPasswordView" ref="editPasswordView"/>
         <property name="importPasswordView" ref="importPasswordView"/>
+        <property name="indexView" ref="indexView"/>
     </bean>
 
     <bean id="createPasswordController" class="com.d.passwordmanager.controller.CreatePasswordController">
@@ -43,7 +44,6 @@
     </bean>
 
     <bean id="importPasswordController" class="com.d.passwordmanager.controller.ImportPasswordController">
-        <property name="indexView" ref="indexView"/>
         <property name="importPasswordView" ref="importPasswordView"/>
         <property name="passwordService" ref="passwordService"/>
         <property name="indexController" ref="indexController"/>

@@ -19,9 +19,9 @@ module com.d.passwordmanager {
     requires logback.classic;
     requires org.aspectj.weaver;
     requires org.apache.commons.lang3;
-    requires org.kordamp.bootstrapfx.core;
     requires org.apache.commons.codec;
     requires org.apache.commons.text;
+    requires cpdetector;
 
     requires spring.aop;
     requires spring.beans;

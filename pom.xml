@@ -170,12 +170,13 @@
             <version>1.9</version>
         </dependency>
 
-        <!-- UI 美化 -->
+        <!-- https://mvnrepository.com/artifact/com.github.jiangxincode/cpdetector -->
         <dependency>
-            <groupId>org.kordamp.bootstrapfx</groupId>
-            <artifactId>bootstrapfx-core</artifactId>
-            <version>0.4.0</version>
+            <groupId>com.github.jiangxincode</groupId>
+            <artifactId>cpdetector</artifactId>
+            <version>1.0.10</version>
         </dependency>
+
 
 
     </dependencies>

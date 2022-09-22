@@ -2,11 +2,14 @@ package com.d.passwordmanager.views;
 
 import com.d.passwordmanager.command.utils.ApplicationUtils;
 import com.d.passwordmanager.controller.IndexController;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,6 +35,13 @@ public class IndexView extends BaseView {
         stage.setTitle("密码管理器 V1.0");
 
         indexController.initView();
+
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                Platform.exit();
+            }
+        });
 
         stage.setScene(scene);
         stage.show();

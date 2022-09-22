@@ -24,6 +24,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
+import javafx.util.Callback;
 import org.springframework.util.ObjectUtils;
 
 import static com.d.passwordmanager.command.utils.PasswordUtils.*;
@@ -216,7 +217,31 @@ public class IndexController {
             }
         });
 
-//        contentTableView.prefWidthProperty().bind(tablePanel.widthProperty());
+        // 给弱密码添加强调背景色
+        passwordStrengthColumn.setCellFactory(new Callback<TableColumn<PasswordRecord, PasswordStrength>, TableCell<PasswordRecord, PasswordStrength>>() {
+            @Override
+            public TableCell<PasswordRecord, PasswordStrength> call(TableColumn<PasswordRecord, PasswordStrength> param) {
+                return new TableCell<>() {
+                    @Override
+                    protected void updateItem(PasswordStrength item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty || item == null) {
+                            setText(null);
+                            setGraphic(null);
+                        } else {
+                            setText(item.name());
+                            if (item == PasswordStrength.WEAK) {
+                                this.setStyle("-fx-text-fill: #ff0000");
+                            } else if (item == PasswordStrength.MEDIUM) {
+                                this.setStyle("-fx-text-fill: #ffa500");
+                            } else if (item == PasswordStrength.STRENGTH) {
+                                this.setStyle("-fx-text-fill: #3bff00");
+                            }
+                        }
+                    }
+                };
+            }
+        });
 
         contentTableView.setItems(FXCollections.observableList(passwordRecordList));
     }

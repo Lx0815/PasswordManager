@@ -1,12 +1,8 @@
 package com.d.passwordmanager.controller;
 
-import java.net.URL;
-import java.util.*;
-
 import com.d.passwordmanager.command.utils.AlertUtils;
 import com.d.passwordmanager.command.utils.ApplicationUtils;
 import com.d.passwordmanager.views.ShowCreatedPasswordView;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
@@ -16,8 +12,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.ObjectUtils;
+
+import java.net.URL;
+import java.util.*;
 
 /**
  * @author: Ding
@@ -69,33 +67,30 @@ public class CreatePasswordController {
     /* Spring */
 
     private ShowCreatedPasswordView showCreatedPasswordView;
-    public void setShowCreatePasswordView(ShowCreatedPasswordView showCreatedPasswordView) {
-        this.showCreatedPasswordView = showCreatedPasswordView;
-    }
-    /* Others */
-
     /**
      * 存放所有符号
      */
     private List<CheckBox> symbolsList;
-
+    /* Others */
     /**
      * 存放所有数字
      */
     private List<CheckBox> digitsList;
-
     /**
      * 存放所有小写字母
      */
     private List<CheckBox> lowerCaseList;
-
     /**
      * 存放所有大写字母
      */
     private List<CheckBox> upperCaseList;
 
+    public void setShowCreatePasswordView(ShowCreatedPasswordView showCreatedPasswordView) {
+        this.showCreatedPasswordView = showCreatedPasswordView;
+    }
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
+    @FXML
+        // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert digitsFlowPanel != null : "fx:id=\"digitsFlowPanel\" was not injected: check your FXML file 'createPassword.fxml'.";
         assert digitsList != null : "fx:id=\"includeDigit\" was not injected: check your FXML file 'createPassword.fxml'.";
@@ -129,10 +124,10 @@ public class CreatePasswordController {
     /**
      * 初始化面板内容，此处主要 创建组件后根据 Unicode 字符进行分流，使其添加到不同的 Panel 中
      *
-     * @param digitsFlowPanel 数字面板
+     * @param digitsFlowPanel    数字面板
      * @param lowerCaseFlowPanel 小写字母面板
      * @param upperCaseFlowPanel 大写字母容器
-     * @param symbolsFlowPanel 符号容器
+     * @param symbolsFlowPanel   符号容器
      */
     private void initFlowPanelContent(FlowPane digitsFlowPanel, FlowPane lowerCaseFlowPanel, FlowPane upperCaseFlowPanel, FlowPane symbolsFlowPanel) {
         for (char i = '!'; i <= '~'; i++) {
@@ -152,6 +147,7 @@ public class CreatePasswordController {
 
     /**
      * 初始化面板样式
+     *
      * @param flowPanes
      */
     public void initFlowPanelStyle(FlowPane... flowPanes) {
@@ -170,9 +166,9 @@ public class CreatePasswordController {
     /**
      * 真正的 使其添加到对应的 Panel 中
      *
-     * @param flowPane 准备好的 Panel
-     * @param temp 要添加的 CheckBox 组件
-     * @param list 组件对应的容器
+     * @param flowPane    准备好的 Panel
+     * @param temp        要添加的 CheckBox 组件
+     * @param list        组件对应的容器
      * @param xxxCheckBox 其对应的整合型 CheckBox，如 数字0 所在的 checkBox 将对应 {@link #digitsCheckBox}
      */
     private void process(FlowPane flowPane, CheckBox temp, List<CheckBox> list, CheckBox xxxCheckBox) {
@@ -183,7 +179,8 @@ public class CreatePasswordController {
                 xxxCheckBox.setSelected(true);
             } else {
                 xxxCheckBox.setSelected(false);
-            };
+            }
+            ;
         });
     }
 
@@ -230,7 +227,7 @@ public class CreatePasswordController {
     /**
      * 选择 list 中的所有 checkbox
      *
-     * @param condition 为 true 时选择全部
+     * @param condition    为 true 时选择全部
      * @param checkBoxList 所有的 checkbox
      */
     private void selectAllItem(boolean condition, List<CheckBox> checkBoxList) {

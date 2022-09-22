@@ -2,7 +2,6 @@ package com.d.passwordmanager.command.utils;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.stage.Modality;
 
 import java.util.Optional;
 
@@ -16,14 +15,15 @@ import java.util.Optional;
 
 public class AlertUtils {
 
-    private AlertUtils() {}
+    private AlertUtils() {
+    }
 
     /**
      * 弹出一个提示框
      * 相当于调用 alert(messageType, "", message);
      *
      * @param messageType 提示框类型
-     * @param message 消息内容
+     * @param message     消息内容
      * @return 返回用户点击的按钮类型
      */
     public static Optional<ButtonType> alert(Alert.AlertType messageType, String message) {
@@ -34,7 +34,7 @@ public class AlertUtils {
      * 弹出一个提示框
      * 相当于调用 alert(title, message, true);
      *
-     * @param title 标题
+     * @param title   标题
      * @param message 消息内容
      * @return 返回用户点击的按钮类型
      */
@@ -47,8 +47,8 @@ public class AlertUtils {
      * 相当于调用 alert(messageType, title, message, true);
      *
      * @param messageType 提示框类型
-     * @param title 标题
-     * @param message 消息内容
+     * @param title       标题
+     * @param message     消息内容
      * @return 返回用户点击的按钮类型
      */
     public static Optional<ButtonType> alert(Alert.AlertType messageType, String title, String message) {
@@ -59,7 +59,7 @@ public class AlertUtils {
      * 弹出一个提示框
      * 相当于调用 alert(Alert.AlertType.INFORMATION, title, message, isModal);
      *
-     * @param title 标题
+     * @param title   标题
      * @param message 消息内容
      * @param isModal 是否为模态
      * @return 返回用户点击的按钮类型
@@ -72,9 +72,9 @@ public class AlertUtils {
      * 弹出一个提示框
      *
      * @param messageType 提示框类型
-     * @param title 标题
-     * @param message 消息内容
-     * @param isModal 是否为模态
+     * @param title       标题
+     * @param message     消息内容
+     * @param isModal     是否为模态
      * @return 返回用户点击的按钮类型
      */
     public static Optional<ButtonType> alert(Alert.AlertType messageType, String title, String message, boolean isModal) {

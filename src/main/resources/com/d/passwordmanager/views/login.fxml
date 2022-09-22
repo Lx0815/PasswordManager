@@ -6,8 +6,8 @@
 <?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
-<Pane fx:id="loginPanel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-      prefHeight="480.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1"
+<Pane xmlns:fx="http://javafx.com/fxml/1" fx:id="loginPanel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+      minWidth="-Infinity" prefHeight="480.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/11"
       fx:controller="com.d.passwordmanager.controller.LoginController">
     <children>
         <PasswordField fx:id="passwordField" layoutX="292.0" layoutY="293.0" prefHeight="29.0" prefWidth="298.0">

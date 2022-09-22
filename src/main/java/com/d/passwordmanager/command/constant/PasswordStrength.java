@@ -1,7 +1,6 @@
 package com.d.passwordmanager.command.constant;
 
 import java.util.Comparator;
-import java.util.regex.Pattern;
 
 /**
  * @author: Ding

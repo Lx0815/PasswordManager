@@ -1,9 +1,5 @@
 package com.d.passwordmanager.controller;
 
-import java.io.*;
-import java.net.URL;
-import java.util.*;
-
 import com.d.passwordmanager.command.constant.PasswordStrength;
 import com.d.passwordmanager.command.utils.AlertUtils;
 import com.d.passwordmanager.command.utils.ApplicationUtils;
@@ -15,19 +11,22 @@ import com.d.passwordmanager.views.ImportPasswordView;
 import com.d.passwordmanager.views.IndexView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import javafx.stage.FileChooser;
 import javafx.util.Callback;
 import org.springframework.util.ObjectUtils;
 
-import static com.d.passwordmanager.command.utils.PasswordUtils.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.URL;
+import java.util.*;
+
+import static com.d.passwordmanager.command.utils.PasswordUtils.getPasswordRecordByTextFields;
 
 /**
  * @author: Ding
@@ -106,40 +105,39 @@ public class IndexController {
     /* Spring */
 
     private PasswordService passwordService;
+    private CreatePasswordView createPasswordView;
+    private EditPasswordView editPasswordView;
+    private ImportPasswordView importPasswordView;
+    private IndexView indexView;
+
+
+    /* Others */
+    private int passwordRecordSize;
+    private String searchKeyword;
+    private List<PasswordRecord> passwordRecordList;
+
     public void setPasswordService(PasswordService passwordService) {
         this.passwordService = passwordService;
     }
 
-
-    private CreatePasswordView createPasswordView;
     public void setCreatePasswordView(CreatePasswordView createPasswordView) {
         this.createPasswordView = createPasswordView;
     }
 
-    private EditPasswordView editPasswordView;
     public void setEditPasswordView(EditPasswordView editPasswordView) {
         this.editPasswordView = editPasswordView;
     }
 
-    private ImportPasswordView importPasswordView;
     public void setImportPasswordView(ImportPasswordView importPasswordView) {
         this.importPasswordView = importPasswordView;
     }
 
-    private IndexView indexView;
     public void setIndexView(IndexView indexView) {
         this.indexView = indexView;
     }
 
-    /* Others */
-    private int passwordRecordSize;
-
-    private String searchKeyword;
-
-    private List<PasswordRecord> passwordRecordList;
-
-
-    @FXML // This method is called by the FXMLLoader when initialization is complete
+    @FXML
+        // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert addOneButton != null : "fx:id=\"addOneButton\" was not injected: check your FXML file 'index.fxml'.";
         assert checkboxColumn != null : "fx:id=\"checkboxColumn\" was not injected: check your FXML file 'index.fxml'.";
@@ -159,8 +157,9 @@ public class IndexController {
         assert totalPasswordTipsLabel != null : "fx:id=\"totalPasswordTipsLabel\" was not injected: check your FXML file 'index.fxml'.";
     }
 
+
     /**
-     * 
+     * 初始化界面相关内容
      */
     public void initView() {
         initColumn();
@@ -218,7 +217,7 @@ public class IndexController {
         });
 
         // 给弱密码添加强调背景色
-        passwordStrengthColumn.setCellFactory(new Callback<TableColumn<PasswordRecord, PasswordStrength>, TableCell<PasswordRecord, PasswordStrength>>() {
+        passwordStrengthColumn.setCellFactory(new Callback<>() {
             @Override
             public TableCell<PasswordRecord, PasswordStrength> call(TableColumn<PasswordRecord, PasswordStrength> param) {
                 return new TableCell<>() {
@@ -299,6 +298,7 @@ public class IndexController {
 
     /**
      * 当搜索按钮被点击
+     *
      * @param event
      */
     @FXML
@@ -321,7 +321,7 @@ public class IndexController {
         File file = indexView.showSaveWindow();
         if (ObjectUtils.isEmpty(file)) return;
         try {
-            if (! file.exists() && ! file.createNewFile())
+            if (!file.exists() && !file.createNewFile())
                 AlertUtils.alert(Alert.AlertType.WARNING, "导出失败，请重新选择位置");
             boolean isSuccess = passwordService.savaToFile(file, passwordService);
             if (isSuccess) {
@@ -360,6 +360,7 @@ public class IndexController {
 
     /**
      * 创建密码，即打开 createPasswordView
+     *
      * @param mouseEvent
      */
     @FXML
@@ -395,6 +396,7 @@ public class IndexController {
 
     /**
      * 如果 flag 为 true 则刷新
+     *
      * @param flag 是否刷新
      */
     public void refresh(boolean flag) {

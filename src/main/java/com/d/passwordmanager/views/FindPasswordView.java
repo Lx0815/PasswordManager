@@ -12,12 +12,13 @@ import java.io.IOException;
 public class FindPasswordView extends BaseView {
 
     private FindPasswordController findPasswordController;
-    public void setFindPasswordController(FindPasswordController findPasswordController) {
-        this.findPasswordController = findPasswordController;
-    }
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    public void setFindPasswordController(FindPasswordController findPasswordController) {
+        this.findPasswordController = findPasswordController;
     }
 
     @Override

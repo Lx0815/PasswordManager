@@ -3,7 +3,6 @@ package com.d.passwordmanager.service.aop;
 import com.d.passwordmanager.command.utils.PasswordUtils;
 import com.d.passwordmanager.pojo.PasswordRecord;
 import com.d.passwordmanager.pojo.User;
-import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 
 import java.util.Arrays;
@@ -51,8 +50,8 @@ public class PasswordEncodeDecode {
         Arrays.stream(args)
                 .filter(param -> param instanceof PasswordRecord)
                 .forEach(passwordRecord -> ((PasswordRecord) passwordRecord)
-                                .setPassword(PasswordUtils.encode(
-                                        ((PasswordRecord) passwordRecord).getPassword())));
+                        .setPassword(PasswordUtils.encode(
+                                ((PasswordRecord) passwordRecord).getPassword())));
         return pjp.proceed(args);
     }
 

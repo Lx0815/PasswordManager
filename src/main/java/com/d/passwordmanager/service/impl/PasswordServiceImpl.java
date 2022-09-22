@@ -1,6 +1,6 @@
 package com.d.passwordmanager.service.impl;
 
-import com.d.passwordmanager.command.csv.CsvUtils;
+import com.d.passwordmanager.command.utils.CsvUtils;
 import com.d.passwordmanager.command.utils.PasswordUtils;
 import com.d.passwordmanager.mapper.PasswordMapper;
 import com.d.passwordmanager.pojo.PasswordRecord;
@@ -9,7 +9,6 @@ import org.springframework.util.ObjectUtils;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +24,7 @@ import java.util.Map;
 public class PasswordServiceImpl implements PasswordService {
 
     private PasswordMapper passwordMapper;
+
     public void setPasswordMapper(PasswordMapper passwordMapper) {
         this.passwordMapper = passwordMapper;
     }
@@ -54,21 +54,16 @@ public class PasswordServiceImpl implements PasswordService {
     }
 
     @Override
-    public void deleteAll() {
-        passwordMapper.deleteAll();
-    }
-
-    @Override
     public boolean insertOne(PasswordRecord passwordRecord) {
         return passwordMapper.insertOne(passwordRecord) == 1;
     }
 
     @Override
-    public boolean importFromEdge(File file, Map<String, String> mapperMap) {
+    public boolean importByCsv(File file, Map<String, String> mapperMap) {
         try {
             List<PasswordRecord> passwordRecordList = CsvUtils.readAll(PasswordRecord.class,
-                                                                            mapperMap,
-                                                                            file.toPath());
+                    mapperMap,
+                    file.toPath());
 
             passwordRecordList.forEach(it -> {
                 // 设置密码强度
@@ -90,7 +85,7 @@ public class PasswordServiceImpl implements PasswordService {
     public boolean savaToFile(File file, PasswordService passwordService) {
         try (OutputStream outputStream = new FileOutputStream(file)) {
             // 通过 passwordService 被增强后的类去调用方法，以获取到解密之后的密码
-            List<PasswordRecord> list = passwordService.selectByKeyword(null);
+            List<PasswordRecord> list = passwordService.selectAll();
             StringBuilder sb = new StringBuilder("name,url,username,password\n");
             list.forEach(it -> {
                 sb.append(it.getDomainName())

@@ -28,12 +28,13 @@ public class PasswordRecord {
     // 仅用于记录当前密码记录是否被选中
     private CheckBox selected = new CheckBox();
 
-    // 仅用于隐藏密码时的替代显示
+    // 仅用于不需要显示密码时的替代显示
     private String passwordEcho;
 
     private PasswordStrength passwordStrength;
 
-    public PasswordRecord() {}
+    public PasswordRecord() {
+    }
 
     public PasswordRecord(Integer id, String domainName, String description, String username, String password, PasswordStrength passwordStrength) {
         this.id = id;
@@ -98,7 +99,6 @@ public class PasswordRecord {
 
     public CheckBox getSelected() {
         return selected;
-//        return null;
     }
 
     public void setSelected(CheckBox selected) {

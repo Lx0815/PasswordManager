@@ -1,9 +1,5 @@
 package com.d.passwordmanager.controller;
 
-import java.net.URL;
-import java.util.List;
-import java.util.ResourceBundle;
-
 import com.d.passwordmanager.command.utils.AlertUtils;
 import com.d.passwordmanager.command.utils.PasswordUtils;
 import com.d.passwordmanager.service.UserService;
@@ -15,6 +11,10 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import org.springframework.util.ObjectUtils;
+
+import java.net.URL;
+import java.util.List;
+import java.util.ResourceBundle;
 
 public class FindPasswordController {
 
@@ -57,16 +57,18 @@ public class FindPasswordController {
 
     /* Spring */
     private UserService userService;
+    private FindPasswordView findPasswordView;
+
     public void setUserService(UserService userService) {
         this.userService = userService;
     }
 
-    private FindPasswordView findPasswordView;
     public void setFindPasswordView(FindPasswordView findPasswordView) {
         this.findPasswordView = findPasswordView;
     }
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
+    @FXML
+        // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert answer1TextField != null : "fx:id=\"answer1TextField\" was not injected: check your FXML file 'findPassword.fxml'.";
         assert answer2TextField != null : "fx:id=\"answer2TextField\" was not injected: check your FXML file 'findPassword.fxml'.";
@@ -95,7 +97,7 @@ public class FindPasswordController {
         boolean flag = userService.checkAnswer(answer1, answer2, answer3);
         if (flag) {
             String password = passwordTextField.getText();
-            if (! PasswordUtils.checkPassword(password)) {
+            if (!PasswordUtils.checkPassword(password)) {
                 PasswordUtils.alertPasswordError();
             }
             boolean isSuccess = userService.updatePassword(password);

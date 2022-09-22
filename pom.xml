@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
@@ -178,22 +178,19 @@
         </dependency>
 
 
-
-
-
     </dependencies>
 
     <build>
-<!--        <testResources>-->
-<!--            <testResource>-->
-<!--                <directory>src/test/resources</directory>-->
-<!--            </testResource>-->
-<!--            &lt;!&ndash; 使 Maven 将 main 包下的 resource 资源文件也编译到 test-classes 中&ndash;&gt;-->
-<!--            <testResource>-->
-<!--                <directory>src/main/resources</directory>-->
-<!--            </testResource>-->
+        <!--        <testResources>-->
+        <!--            <testResource>-->
+        <!--                <directory>src/test/resources</directory>-->
+        <!--            </testResource>-->
+        <!--            &lt;!&ndash; 使 Maven 将 main 包下的 resource 资源文件也编译到 test-classes 中&ndash;&gt;-->
+        <!--            <testResource>-->
+        <!--                <directory>src/main/resources</directory>-->
+        <!--            </testResource>-->
 
-<!--        </testResources>-->
+        <!--        </testResources>-->
 
         <plugins>
             <plugin>
@@ -209,16 +206,20 @@
                         <configuration>
                             <transformers>
                                 <!-- 不覆盖同名文件，而是追加合并同名文件 -->
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
                                     <resource>META-INF/spring.handlers</resource>
                                 </transformer>
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
                                     <resource>META-INF/spring.schemas</resource>
                                 </transformer>
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
                                     <resource>META-INF/spring.tooling</resource>
                                 </transformer>
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                     <mainClass>com.d.passwordmanager/com.d.passwordmanager.Main</mainClass>
                                 </transformer>
                             </transformers>

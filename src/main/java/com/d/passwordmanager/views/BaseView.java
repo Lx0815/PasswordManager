@@ -1,6 +1,5 @@
 package com.d.passwordmanager.views;
 
-import com.d.passwordmanager.command.utils.ApplicationUtils;
 import javafx.application.Application;
 import javafx.stage.Stage;
 

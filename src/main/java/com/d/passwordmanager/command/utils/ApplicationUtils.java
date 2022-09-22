@@ -1,7 +1,6 @@
 package com.d.passwordmanager.command.utils;
 
 import com.d.passwordmanager.views.BaseView;
-import com.d.passwordmanager.views.LoginView;
 import com.d.passwordmanager.views.MainApplication;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
@@ -32,7 +31,8 @@ public class ApplicationUtils {
         context = new ClassPathXmlApplicationContext("application-context.xml");
     }
 
-    private ApplicationUtils() {}
+    private ApplicationUtils() {
+    }
 
     /**
      * 根据输入的 fxml 配置文件加载得到其 FXMLLoader 对象，其主要作用是将 FXML 对象中的 Controller 替换为 Spring 容器中的 Controller

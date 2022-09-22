@@ -7,10 +7,6 @@ package com.d.passwordmanager.controller;
  * @modify:
  */
 
-import java.net.URL;
-import java.util.ResourceBundle;
-import static com.d.passwordmanager.command.utils.PasswordUtils.*;
-
 import com.d.passwordmanager.command.constant.PasswordStrength;
 import com.d.passwordmanager.command.utils.AlertUtils;
 import com.d.passwordmanager.command.utils.PasswordUtils;
@@ -24,6 +20,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import org.springframework.util.Assert;
+
+import java.net.URL;
+import java.util.ResourceBundle;
+
+import static com.d.passwordmanager.command.utils.PasswordUtils.calculatePasswordStrength;
+import static com.d.passwordmanager.command.utils.PasswordUtils.getPasswordRecordByTextFields;
 
 public class EditPasswordController {
 
@@ -55,26 +57,22 @@ public class EditPasswordController {
     /* Spring */
 
     private PasswordService passwordService;
+    private EditPasswordView editPasswordView;
+    private IndexController indexController;
+    /* Others */
+    private PasswordRecord oldPasswordRecord;
 
     public void setPasswordService(PasswordService passwordService) {
         this.passwordService = passwordService;
     }
 
-
-    private EditPasswordView editPasswordView;
-
     public void setEditPasswordView(EditPasswordView editPasswordView) {
         this.editPasswordView = editPasswordView;
     }
 
-    private IndexController indexController;
-
     public void setIndexController(IndexController indexController) {
         this.indexController = indexController;
     }
-
-    /* Others */
-    private PasswordRecord oldPasswordRecord;
 
     public void setOldPasswordRecord(PasswordRecord oldPasswordRecord) {
         this.oldPasswordRecord = oldPasswordRecord;

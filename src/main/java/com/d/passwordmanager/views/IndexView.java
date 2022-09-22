@@ -14,12 +14,13 @@ import java.io.IOException;
 public class IndexView extends BaseView {
 
     private IndexController indexController;
-    public void setIndexController(IndexController indexController) {
-        this.indexController = indexController;
-    }
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    public void setIndexController(IndexController indexController) {
+        this.indexController = indexController;
     }
 
     @Override

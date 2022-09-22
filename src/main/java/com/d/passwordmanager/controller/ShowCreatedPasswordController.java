@@ -25,7 +25,8 @@ public class ShowCreatedPasswordController {
     @FXML // fx:id="messageTextField"
     private TextField messageTextField; // Value injected by FXMLLoader
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
+    @FXML
+        // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert messageTextField != null : "fx:id=\"messageTextField\" was not injected: check your FXML file 'showCreatedPassword.fxml'.";
 
@@ -40,6 +41,4 @@ public class ShowCreatedPasswordController {
     public void initView(String password) {
         messageTextField.setText("生成的密码是：" + password);
     }
-
-
 }

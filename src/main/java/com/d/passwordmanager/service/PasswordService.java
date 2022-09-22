@@ -15,19 +15,60 @@ import java.util.Map;
 
 
 public interface PasswordService {
+
+    /**
+     * 查询所有密码记录
+     *
+     */
     List<PasswordRecord> selectAll();
 
+    /**
+     * 新增一条密码记录
+     *
+     * @param passwordRecord 要新增的密码
+     * @return 返回是否新增成功
+     */
     boolean insertOne(PasswordRecord passwordRecord);
 
-    boolean updateByPasswordRecord(PasswordRecord rowValue);
+    /**
+     * 更新密码相关信息，包括密码
+     *
+     * @param passwordRecord 新的密码对象
+     * @return 返回是否更新成功
+     */
+    boolean updateByPasswordRecord(PasswordRecord passwordRecord);
 
+    /**
+     * 删除 List 中密码
+     *
+     * @param deleteList 要删除的密码集合
+     * @return 返回是否删除成功
+     */
     boolean deleteByList(List<PasswordRecord> deleteList);
 
+    /**
+     * 通过关键词查询密码
+     *
+     * @param keyword 关键词
+     * @return
+     */
     List<PasswordRecord> selectByKeyword(String keyword);
 
-    void deleteAll();
+    /**
+     * 从 csv 文件中导入密码
+     *
+     * @param file csv 文件
+     * @param mapperMap {@link PasswordRecord} 与 csv 文件的映射关系
+     * @return 返回是否导入成功
+     */
+    boolean importByCsv(File file, Map<String, String> mapperMap);
 
-    boolean importFromEdge(File file, Map<String, String> mapperMap);
-
+    /**
+     * 将密码保存到 csv 文件
+     *
+     * @param file 要保存的文件
+     * @param passwordService 本类被 Spring 增强后的对象
+     * @return 返回是否导出成功
+     */
     boolean savaToFile(File file, PasswordService passwordService);
 }

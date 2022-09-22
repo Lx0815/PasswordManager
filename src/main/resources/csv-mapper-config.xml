@@ -31,7 +31,7 @@
         <!ELEMENT password (#PCDATA)>
         <!ATTLIST password
                 value CDATA #REQUIRED>
-]>
+        ]>
 
 
 <configs>

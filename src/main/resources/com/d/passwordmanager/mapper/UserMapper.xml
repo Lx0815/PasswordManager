@@ -35,7 +35,14 @@
         </where>
     </update>
     <select id="selectUser" resultType="user">
-        SELECT id, password, question1, answer1, question2, answer2, question3, answer3
+        SELECT id,
+               password,
+               question1,
+               answer1,
+               question2,
+               answer2,
+               question3,
+               answer3
         FROM user
         LIMIT 0 , 1
     </select>

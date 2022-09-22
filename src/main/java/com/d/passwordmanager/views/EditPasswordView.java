@@ -1,27 +1,26 @@
 package com.d.passwordmanager.views;
 
+import com.d.passwordmanager.command.utils.ApplicationUtils;
 import com.d.passwordmanager.controller.EditPasswordController;
 import com.d.passwordmanager.pojo.PasswordRecord;
-import com.d.passwordmanager.command.utils.ApplicationUtils;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.springframework.util.Assert;
-import org.springframework.util.ObjectUtils;
 
 import java.io.IOException;
-import java.util.Objects;
 
 public class EditPasswordView extends BaseView {
 
     private EditPasswordController editPasswordController;
-    public void setEditPasswordController(EditPasswordController editPasswordController) {
-        this.editPasswordController = editPasswordController;
-    }
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    public void setEditPasswordController(EditPasswordController editPasswordController) {
+        this.editPasswordController = editPasswordController;
     }
 
     @Override

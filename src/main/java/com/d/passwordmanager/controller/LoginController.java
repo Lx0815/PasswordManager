@@ -1,8 +1,5 @@
 package com.d.passwordmanager.controller;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import com.d.passwordmanager.command.utils.AlertUtils;
 import com.d.passwordmanager.command.utils.ApplicationUtils;
 import com.d.passwordmanager.service.UserService;
@@ -16,6 +13,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 /**
  * @author: Ding
@@ -53,27 +53,29 @@ public class LoginController {
      */
 
     private UserService userService;
+    private LoginView loginView;
+    private IndexView indexView;
+    private FindPasswordView findPasswordView;
+
     /* IOC setter 注入 */
     public void setUserService(UserService userService) {
         this.userService = userService;
     }
 
-    private LoginView loginView;
     public void setLoginView(LoginView loginView) {
         this.loginView = loginView;
     }
 
-    private IndexView indexView;
     public void setIndexView(IndexView indexView) {
         this.indexView = indexView;
     }
 
-    private FindPasswordView findPasswordView;
     public void setFindPasswordView(FindPasswordView findPasswordView) {
         this.findPasswordView = findPasswordView;
     }
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
+    @FXML
+        // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert loginButton != null : "fx:id=\"loginButton\" was not injected: check your FXML file 'login.fxml'.";
         assert loginPanel != null : "fx:id=\"loginPanel\" was not injected: check your FXML file 'login.fxml'.";
@@ -118,6 +120,7 @@ public class LoginController {
 
     /**
      * 转到 找回密码的页面
+     *
      * @param mouseEvent 鼠标点击事件
      */
     @FXML

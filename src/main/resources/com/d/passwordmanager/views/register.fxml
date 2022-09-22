@@ -5,8 +5,8 @@
 <?import javafx.scene.effect.Shadow?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<Pane fx:id="registerPanel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-      prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1"
+<Pane xmlns:fx="http://javafx.com/fxml/1" fx:id="registerPanel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+      minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11"
       fx:controller="com.d.passwordmanager.controller.RegisterController">
     <children>
         <BorderPane prefHeight="400.0" prefWidth="600.0">

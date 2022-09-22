@@ -1,14 +1,9 @@
 package com.d.passwordmanager.controller;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import com.d.passwordmanager.command.utils.AlertUtils;
 import com.d.passwordmanager.command.utils.ApplicationUtils;
-import com.d.passwordmanager.command.utils.PasswordUtils;
 import com.d.passwordmanager.pojo.User;
 import com.d.passwordmanager.service.UserService;
-import com.d.passwordmanager.service.impl.UserServiceImpl;
 import com.d.passwordmanager.views.LoginView;
 import com.d.passwordmanager.views.RegisterView;
 import javafx.fxml.FXML;
@@ -19,6 +14,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import org.springframework.util.ObjectUtils;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 /**
  * @author: Ding
@@ -63,7 +61,27 @@ public class RegisterController {
     @FXML // fx:id="registerPanel"
     private Pane registerPanel; // Value injected by FXMLLoader
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
+
+    /* Spring */
+    private UserService userService;
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
+
+    private LoginView loginView;
+    public void setLoginView(LoginView loginView) {
+        this.loginView = loginView;
+    }
+
+
+    private RegisterView registerView;
+    public void setRegisterView(RegisterView registerView) {
+        this.registerView = registerView;
+    }
+
+    @FXML
+        // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert answer1TextField != null : "fx:id=\"answer1TextField\" was not injected: check your FXML file 'register.fxml'.";
         assert answer2TextField != null : "fx:id=\"answer2TextField\" was not injected: check your FXML file 'register.fxml'.";
@@ -77,22 +95,6 @@ public class RegisterController {
 
     }
 
-
-    /* Spring */
-    private UserService userService;
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
-
-    private LoginView loginView;
-    public void setLoginView(LoginView loginView) {
-        this.loginView = loginView;
-    }
-
-    private RegisterView registerView;
-    public void setRegisterView(RegisterView registerView) {
-        this.registerView = registerView;
-    }
 
     /**
      * 进行注册操作
@@ -113,6 +115,7 @@ public class RegisterController {
 
     /**
      * 从 TextField 中获取用户对象
+     *
      * @return 返回 null 则表示用户还有必填字段未输入
      */
     private User getUserByTextField() {

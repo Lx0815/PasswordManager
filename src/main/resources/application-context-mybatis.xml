@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
@@ -34,7 +34,7 @@
         定义数据源
     -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-<!--        <property name="configLocation" value="mybatis-config.xml"/>-->
+        <!--        <property name="configLocation" value="mybatis-config.xml"/>-->
         <property name="dataSource" ref="dataSource"/>
         <property name="typeAliasesPackage" value="com.d.passwordmanager.pojo"/>
         <property name="mapperLocations" value="classpath:com/d/passwordmanager/mapper/*.xml"/>
@@ -43,12 +43,12 @@
     <!--
         创建 UserMapper 接口的代理对象,创建单个代理对象
     -->
-<!--    <bean id="userMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">-->
-<!--&lt;!&ndash;        注入IusernameDao接口&ndash;&gt;-->
-<!--        <property name="mapperInterface" value="com.d.passwordmanager.mapper.UserMapper"/>-->
-<!--&lt;!&ndash;        注入sqlSessionFactory工厂对象&ndash;&gt;-->
-<!--        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>-->
-<!--    </bean>-->
+    <!--    <bean id="userMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">-->
+    <!--&lt;!&ndash;        注入IusernameDao接口&ndash;&gt;-->
+    <!--        <property name="mapperInterface" value="com.d.passwordmanager.mapper.UserMapper"/>-->
+    <!--&lt;!&ndash;        注入sqlSessionFactory工厂对象&ndash;&gt;-->
+    <!--        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>-->
+    <!--    </bean>-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="com.d.passwordmanager.mapper"/>
         <!--        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>-->
@@ -59,7 +59,7 @@
         事务管理
     -->
     <!-- 配置事务管理器 -->
-<!--    <aop:aspectj-autoproxy proxy-target-class="true"/>-->
+    <!--    <aop:aspectj-autoproxy proxy-target-class="true"/>-->
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"/>
     </bean>

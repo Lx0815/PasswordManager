@@ -11,6 +11,9 @@ import java.io.IOException;
 
 public class ShowCreatedPasswordView extends BaseView {
 
+    /**
+     * 即将展示的密码
+     */
     private String password;
 
     private ShowCreatedPasswordController showCreatedPasswordController;

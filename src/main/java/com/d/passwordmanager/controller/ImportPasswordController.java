@@ -3,15 +3,11 @@ package com.d.passwordmanager.controller;
 import com.d.passwordmanager.command.utils.AlertUtils;
 import com.d.passwordmanager.service.PasswordService;
 import com.d.passwordmanager.views.ImportPasswordView;
-import com.d.passwordmanager.views.IndexView;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
-import javafx.stage.FileChooser;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -65,28 +61,33 @@ public class ImportPasswordController {
     /* Spring */
 
     private ImportPasswordView importPasswordView;
+    private PasswordService passwordService;
+    private IndexController indexController;
+
+
+
+    /**
+     * csv文件标题行与 {@link com.d.passwordmanager.pojo.PasswordRecord} 的映射
+     *
+     * {@code Map<id, Map<property, title>>}
+     */
+    private Map<String, Map<String, String>> mapperMap;
+
     public void setImportPasswordView(ImportPasswordView importPasswordView) {
         this.importPasswordView = importPasswordView;
     }
 
-    private PasswordService passwordService;
     public void setPasswordService(PasswordService passwordService) {
         this.passwordService = passwordService;
-    }
-
-    private IndexController indexController;
-    public void setIndexController(IndexController indexController) {
-        this.indexController = indexController;
     }
 
 
 
     /* Others */
-    /**
-     * csv文件标题行与 {@link com.d.passwordmanager.pojo.PasswordRecord} 的映射
-     * Map<id, Map<property, title>>
-     */
-    private Map<String, Map<String, String>> mapperMap;
+
+    public void setIndexController(IndexController indexController) {
+        this.indexController = indexController;
+    }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
@@ -99,6 +100,9 @@ public class ImportPasswordController {
         changeTextField(this.mapperMap.get("edge"));
     }
 
+    /**
+     * 从 csv-mapper-config.xml 文件中读取 csv 和 {@link com.d.passwordmanager.pojo.PasswordRecord} 之间的映射关系
+     */
     private void loadXml() {
 
         try (InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("csv-mapper-config.xml")) {
@@ -153,6 +157,11 @@ public class ImportPasswordController {
         changeTextField(this.mapperMap.get("firefox"));
     }
 
+    /**
+     * 当 选择文件 按钮被点击时调用
+     *
+     * @param event
+     */
     @FXML
     void selectFile(MouseEvent event) {
         doSelect(Map.of("domainName", domainNameTextField.getText(),
@@ -182,7 +191,7 @@ public class ImportPasswordController {
     private void doSelect(Map<String, String> mapperMap) {
         File file = importPasswordView.doSelectFile();
         mapperMap = reserveKeyValue(mapperMap);
-        boolean isSuccess = passwordService.importFromEdge(file, mapperMap);
+        boolean isSuccess = passwordService.importByCsv(file, mapperMap);
         if (isSuccess) {
             indexController.refresh();
             importPasswordView.close();

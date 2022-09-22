@@ -1,8 +1,6 @@
 package com.d.passwordmanager.pojo;
 
 
-import org.springframework.util.ObjectUtils;
-
 import java.util.ArrayList;
 import java.util.List;
 

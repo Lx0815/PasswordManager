@@ -13,7 +13,6 @@ import java.util.List;
  */
 
 
-//@Repository
 public interface PasswordMapper {
 
     Integer updateById(PasswordRecord passwordRecord);

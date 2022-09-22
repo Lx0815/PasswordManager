@@ -53,5 +53,4 @@ module com.d.passwordmanager {
     opens com.d.passwordmanager.mapper to spring.core, spring.context, spring.test, spring.jdbc, spring.beans;
     exports com.d.passwordmanager;
     opens com.d.passwordmanager to javafx.fxml;
-    exports com.d.passwordmanager.command.csv;
 }

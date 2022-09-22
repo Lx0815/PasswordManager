@@ -87,9 +87,6 @@
                                     <bumpInput>
                                         <Shadow/>
                                     </bumpInput>
-                                    <light>
-                                        <Light.Distant/>
-                                    </light>
                                 </Lighting>
                             </effect>
                         </Button>

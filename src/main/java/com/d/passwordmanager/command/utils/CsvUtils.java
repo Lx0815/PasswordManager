@@ -6,6 +6,7 @@ import org.springframework.util.ObjectUtils;
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.LinkedList;
@@ -47,7 +48,7 @@ public class CsvUtils {
         InputStream inputStream = new FileInputStream(file);
 
         List<T> tList = new LinkedList<>();
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
             String headers = br.readLine();
             String row;
             while (!ObjectUtils.isEmpty(row = br.readLine())) {
